@@ -1,0 +1,79 @@
+/* additional zeroing styles */
+
+html {
+  box-sizing: border-box;
+  background: #f2f2f2;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+@keyframes App-logo-spin {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}
+
+/* Обеспечиваем, что компонент Password с toggleMask занимает всю ширину */
+.p-password {
+  width: 100% !important; /* Убедитесь, что сам компонент растягивается */
+  box-sizing: border-box; /* Учитываем бордеры и паддинги */
+}
+
+/* Иконка toggleMask внутри Password компонента */
+.p-password .p-inputgroup-addon {
+  width: auto !important;  /* Чтобы иконка не ограничивала ширину */
+}
+
+/* Дополнительная настройка для текста, чтобы они были на одной линии */
+.p-password input {
+  width: 100% !important;  /* Растягиваем input */
+  box-sizing: border-box;
+}
+
+.p-password .p-password-icon {
+  display: none;  /* Скрываем иконку для маски, если не нужна */
+}

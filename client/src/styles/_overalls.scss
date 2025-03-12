@@ -1,0 +1,23 @@
+/* overalls styles */
+
+.container {
+  width: 100%;
+  height: 100vh;
+}
+
+.site-container {
+  height: 100vh;
+  width: 1450px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+.btn-reset {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.is-hidden {
+  display: none;
+}

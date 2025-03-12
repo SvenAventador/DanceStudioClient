@@ -1,0 +1,20 @@
+/*base*/
+@use "fonts";
+@use "global";
+@use "overalls";
+@use "vars";
+
+/*mixins*/
+@use "func/mixins";
+@use "func/font-face";
+
+/*pages*/
+@use "pages/auth";
+
+/*components*/
+@use "components/global/loader";
+@use "components/auth/login";
+@use "components/auth/registration";
+
+/*vendor*/
+@use "vendors";

@@ -1,0 +1,50 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+
+  &__label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+
+    &-group:not(:last-child) {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+  }
+
+  &__forgot-password {
+    font-size: 15px;
+    color: #666cff;
+    text-decoration: none;
+    text-align: right;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  &__btn {
+    background-color: #666cff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+
+  &__btn:hover {
+    background-color: #7b2ffc;
+    transition: 0.3s ease-in-out;
+  }
+}
