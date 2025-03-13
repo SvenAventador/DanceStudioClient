@@ -21,3 +21,19 @@
 .is-hidden {
   display: none;
 }
+
+.custom-modal .p-dialog-content {
+  padding: 20px;
+}
+
+.custom-modal .p-dialog-header {
+  background: #f4f4f4;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+.p-inputtext-lg {
+  font-size: 1.1rem;
+  padding: 10px;
+}

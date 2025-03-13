@@ -11,9 +11,9 @@ import {
 import {Toast} from "primereact/toast"
 import {InputText} from "primereact/inputtext"
 import {FloatLabel} from "primereact/floatlabel"
-import {Dialog} from "primereact/dialog";
-import {Password} from "primereact/password";
-import {changePassword, getVerifyCode} from "../../http/auth.js";
+import {Dialog} from "primereact/dialog"
+import {Password} from "primereact/password"
+import {changePassword, getVerifyCode} from "../../http/auth.js"
 
 const Login = () => {
     const {loginUser} = useUser()
@@ -49,7 +49,7 @@ const Login = () => {
                     data.role === 'ADMIN' ? navigate(ADMIN_PATH) : navigate(MAIN_PATH)
                 }, 3000)
             }).catch((error) => {
-                return showToast(toast, 'error', 'Ошибка авторизации', `${error.response.data.message}`, 3000);
+                return showToast(toast, 'error', 'Ошибка авторизации', `${error.response.data.message}`, 3000)
             })
         }
     }
@@ -69,22 +69,32 @@ const Login = () => {
     }
 
     const handleNext = () => {
-        if (step === 1 && resetEmail) {
+        if (step === 1) {
+            if (!resetEmail)
+                return showToast(toast, 'error', 'Ошибка', `Пожалуйста, введите почту!`, 3000);
+
             getVerifyCode(resetEmail).then(({verifyCode}) => {
                 setVerificationCode(verifyCode)
                 setStep(2)
             }).catch((error) => {
-                return showToast(toast, 'error', 'Ошибка авторизации', `${error.response.data.message}`, 3000);
+                return showToast(toast, 'error', 'Ошибка авторизации', `${error.response.data.message}`, 3000)
             })
-        } else if (step === 2 && checkCode) {
+        } else if (step === 2) {
+            if (!checkCode)
+                return showToast(toast, 'error', 'Ошибка', `Пожалуйста, введите код с почты!`, 3000);
+
             if (+verificationCode !== +checkCode)
                 return showToast(toast, 'error', 'Ошибка', 'Код, который был отправлен на почту не совпадает с введеным Вами кодом', 3000)
 
             setStep(3)
-        } else if (step === 3 && newPassword) {
+        } else if (step === 3) {
+            if (!newPassword)
+                return showToast(toast, 'error', 'Ошибка', `Пожалуйста, введите новый пароль!`, 3000);
             changePassword(resetEmail, newPassword).then(({message}) => {
                 showToast(toast, 'success', 'Пароль изменен', message, 3000)
                 clearData()
+            }).catch((error) => {
+                return showToast(toast, 'error', 'Ошибка авторизации', `${error.response.data.message}`, 5000)
             })
         }
     }
