@@ -18,7 +18,7 @@ import {InputText} from "primereact/inputtext"
 import {Dialog} from "primereact/dialog"
 import {DataTable} from 'primereact/datatable'
 import {Column} from 'primereact/column'
-import {showToast} from "../../utils/utils.jsx";
+import {showToast} from "../../utils/utils.jsx"
 
 const Specialization = () => {
     const [specializations, setSpecializations] = React.useState([])
@@ -45,9 +45,8 @@ const Specialization = () => {
     }
 
     const saveData = () => {
-        if (!editData?.name) {
-            return showToast(toast, "error", "Ошибка", "Пожалуйста, введите название направления!", 3000)
-        }
+        if (!editData?.name)
+            return showToast(toast, "error", "Ошибка", "Пожалуйста, введите название направления!", 5000)
 
         try {
             if (editData.id) {
@@ -100,7 +99,7 @@ const Specialization = () => {
         })
     }
 
-    const deleteSelected = () => {
+    const deleteAllSpecializations = () => {
         confirmDialog({
             message: "Вы уверены, что хотите удалить выбранные записи?",
             header: "Подтверждение",
@@ -145,7 +144,7 @@ const Specialization = () => {
                                <Button label="Удалить все"
                                        icon="pi pi-trash"
                                        className="p-button-danger"
-                                       onClick={deleteSelected}/>
+                                       onClick={deleteAllSpecializations}/>
                                <InputText placeholder="Поиск по имени"
                                           onInput={(e) => setGlobalFilter(e.target.value)}/>
                            </div>

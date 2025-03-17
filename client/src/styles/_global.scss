@@ -57,23 +57,20 @@ input[type="search"]::-webkit-search-results-decoration {
   }
 }
 
-/* Обеспечиваем, что компонент Password с toggleMask занимает всю ширину */
 .p-password {
-  width: 100% !important; /* Убедитесь, что сам компонент растягивается */
-  box-sizing: border-box; /* Учитываем бордеры и паддинги */
+  width: 100% !important;
+  box-sizing: border-box;
 }
 
-/* Иконка toggleMask внутри Password компонента */
 .p-password .p-inputgroup-addon {
-  width: auto !important;  /* Чтобы иконка не ограничивала ширину */
+  width: auto !important;
 }
 
-/* Дополнительная настройка для текста, чтобы они были на одной линии */
 .p-password input {
-  width: 100% !important;  /* Растягиваем input */
+  width: 100% !important;
   box-sizing: border-box;
 }
 
 .p-password .p-password-icon {
-  display: none;  /* Скрываем иконку для маски, если не нужна */
+  display: none;
 }

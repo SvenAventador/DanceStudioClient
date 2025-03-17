@@ -1,7 +1,7 @@
 import {
     $authHost,
     $host
-} from "./index";
+} from "./index"
 
 export const getOne = async (id) => {
     const {data} = await $host.get(`specialization/${id}`)
