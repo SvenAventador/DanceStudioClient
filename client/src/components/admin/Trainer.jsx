@@ -19,29 +19,10 @@ import {DataTable} from 'primereact/datatable'
 import {Column} from 'primereact/column'
 import {Dropdown} from "primereact/dropdown"
 import {FileUpload} from "primereact/fileupload"
-import {showToast} from "../../utils/utils.jsx"
+import {itemTemplate, showToast} from "../../utils/utils.jsx"
 import {Image} from "primereact/image"
 import {InputTextarea} from "primereact/inputtextarea"
 import {InputMask} from "primereact/inputmask"
-
-const itemTemplate = (file, _) => {
-    return (
-        <div style={{
-            display: 'flex',
-            alignItems: 'center'
-        }}>
-            <Image alt={file.name}
-                   role="presentation"
-                   src={file.objectURL}
-                   style={{
-                       width: 100,
-                       marginRight: 8
-                   }}
-                   preview/>
-            <span>{file.name}</span>
-        </div>
-    )
-}
 
 const Trainer = () => {
     const [trainers, setTrainers] = React.useState([])
@@ -106,7 +87,7 @@ const Trainer = () => {
             if (fileUploadRef.current)
                 fileUploadRef.current.clear()
         }
-        setModalVisible(true);
+        setModalVisible(true)
     }
 
     const closeModal = () => {

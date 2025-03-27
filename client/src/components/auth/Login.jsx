@@ -4,22 +4,22 @@ import {useNavigate} from "react-router-dom"
 import {
     ADMIN_PATH,
     footer,
-    MAIN_PATH,
-    showToast
+    MAIN_PATH
 } from "../../utils/utils.jsx"
 
-import {Toast} from "primereact/toast"
 import {InputText} from "primereact/inputtext"
 import {FloatLabel} from "primereact/floatlabel"
 import {Dialog} from "primereact/dialog"
 import {Password} from "primereact/password"
-import {changePassword, getVerifyCode} from "../../http/auth.js"
+import {
+    changePassword,
+    getVerifyCode
+} from "../../http/auth.js"
+import Swal from "sweetalert2"
 
 const Login = () => {
     const {loginUser} = useUser()
     const navigate = useNavigate()
-
-    const toast = React.useRef(null)
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
@@ -36,20 +36,29 @@ const Login = () => {
         e.preventDefault()
 
         if (!email || !password) {
-            return showToast(toast, 'error', 'Ошибка', 'Пожалуйста, заполните необходимые поля', 3000)
+            return Swal.fire({
+                title: "Ошибка",
+                text: "Пожалуйста, заполните необходимые поля",
+            })
         } else {
             const user = new FormData()
             user.append('email', email)
             user.append('password', password)
 
             loginUser(user).then((data) => {
-                showToast(toast, 'success', 'Приветствуем', 'С возвращением', 3000)
-
-                setTimeout(() => {
-                    data.role === 'ADMIN' ? navigate(ADMIN_PATH) : navigate(MAIN_PATH)
-                }, 3000)
+                Swal.fire({
+                    title: "Дорогой пользователь",
+                    text: "Поздравляем Вас с успешным входом в систему!",
+                }).then(() => {
+                    setTimeout(() => {
+                        data.role === 'ADMIN' ? navigate(ADMIN_PATH) : navigate(MAIN_PATH)
+                    }, 2000)
+                })
             }).catch((error) => {
-                return showToast(toast, 'error', 'Ошибка авторизации', `${error.response.data.message}`, 3000)
+                return Swal.fire({
+                    title: 'Ошибка',
+                    text: error.response.data.message
+                })
             })
         }
     }
@@ -71,30 +80,53 @@ const Login = () => {
     const handleNext = () => {
         if (step === 1) {
             if (!resetEmail)
-                return showToast(toast, 'error', 'Ошибка', `Пожалуйста, введите почту!`, 3000);
+                return Swal.fire({
+                    title: 'Ошибка',
+                    text: 'Пожалуйста, введите почту!',
+                    zIndex: 99999999
+                })
 
             getVerifyCode(resetEmail).then(({verifyCode}) => {
                 setVerificationCode(verifyCode)
                 setStep(2)
             }).catch((error) => {
-                return showToast(toast, 'error', 'Ошибка авторизации', `${error.response.data.message}`, 3000)
+                return Swal.fire({
+                    title: 'Ошибка получения кода',
+                    text: error.response.data.message
+                })
             })
         } else if (step === 2) {
             if (!checkCode)
-                return showToast(toast, 'error', 'Ошибка', `Пожалуйста, введите код с почты!`, 3000);
+                return Swal.fire({
+                    title: 'Ошибка',
+                    text: 'Пожалуйста, введите код с почты!'
+                })
 
             if (+verificationCode !== +checkCode)
-                return showToast(toast, 'error', 'Ошибка', 'Код, который был отправлен на почту не совпадает с введеным Вами кодом', 3000)
+                return Swal.fire({
+                    title: 'Ошибка',
+                    text: 'Код, который был отправлен на почту не совпадает с введеным Вами кодом!'
+                })
 
             setStep(3)
         } else if (step === 3) {
             if (!newPassword)
-                return showToast(toast, 'error', 'Ошибка', `Пожалуйста, введите новый пароль!`, 3000);
+                return Swal.fire({
+                    title: 'Ошибка',
+                    text: 'Пожалуйста, введите новый пароль!'
+                })
             changePassword(resetEmail, newPassword).then(({message}) => {
-                showToast(toast, 'success', 'Пароль изменен', message, 3000)
-                clearData()
+                Swal.fire({
+                    title: 'Смена пароля',
+                    text: message
+                }).then(() => {
+                    clearData()
+                })
             }).catch((error) => {
-                return showToast(toast, 'error', 'Ошибка авторизации', `${error.response.data.message}`, 5000)
+                return Swal.fire({
+                    title: 'Ошибка смены пароля',
+                    text: error.response.data.message
+                })
             })
         }
     }
@@ -102,7 +134,6 @@ const Login = () => {
     return (
         <>
             <form className="login">
-                <Toast ref={toast}/>
                 <FloatLabel className="login__input-group">
                     <InputText id="email"
                                className="login__input"
@@ -140,7 +171,8 @@ const Login = () => {
                             <InputText value={resetEmail}
                                        style={{
                                            marginTop: '5px',
-                                           marginBottom: '10px'
+                                           marginBottom: '10px',
+                                           width: '100%'
                                        }}
                                        className="login__input"
                                        placeholder="Пожалуйста, введите почту"
@@ -162,7 +194,8 @@ const Login = () => {
                             <InputText value={checkCode}
                                        style={{
                                            marginTop: '5px',
-                                           marginBottom: '10px'
+                                           marginBottom: '10px',
+                                           width: '100%'
                                        }}
                                        className="login__input"
                                        placeholder="Пожалуйста, введите код"
@@ -184,7 +217,8 @@ const Login = () => {
                             <Password value={newPassword}
                                       style={{
                                           marginTop: '5px',
-                                          marginBottom: '10px'
+                                          marginBottom: '10px',
+                                          width: '100%'
                                       }}
                                       className="p-password p-fluid"
                                       placeholder="Пожалуйста, введите пароль"

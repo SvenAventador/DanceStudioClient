@@ -13,13 +13,14 @@ export const getAll = async () => {
     return data
 }
 
-export const create = async (name) => {
-    const {data} = await $authHost.post('specialization', {name})
+export const create = async (specialization) => {
+    const {data} = await $authHost.post('specialization', specialization)
     return data
 }
 
-export const edit = async (id, name) => {
-    const {data} = await $authHost.put(`specialization`, {id, name})
+export const edit = async (specialization) => {
+    console.log(specialization)
+    const {data} = await $authHost.put(`specialization`, specialization)
     return data
 }
 

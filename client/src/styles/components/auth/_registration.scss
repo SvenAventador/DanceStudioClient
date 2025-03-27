@@ -1,41 +1,79 @@
+$auth-bg: linear-gradient(45deg, #2A5D8A 0%, #3D8FD1 100%);
+$glass-bg: rgba(255, 255, 255, 0.95);
+$text-primary: #2A5D8A;
+$accent-blue: #666cff;
+
 .registration {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
+  &__input-group {
+    margin-bottom: 1.5rem;
+    position: relative;
 
-  &__input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+    .p-float-label label {
+      left: 1rem !important;
+      transition: all 0.3s ease !important;
+    }
 
-    &-group {
-      margin-bottom: 30px;
-      text-align: left;
+    .p-inputtext {
+      width: 100%;
+      padding: 1rem 1.5rem !important;
+      border: 2px solid rgba($accent-blue, 0.2) !important;
+      border-radius: 12px !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      transition: all 0.3s ease !important;
+
+      &:focus, &:hover {
+        border-color: $accent-blue !important;
+        box-shadow: 0 0 0 3px rgba($accent-blue, 0.2) !important;
+      }
+    }
+
+    .p-password {
+      .p-inputtext {
+        padding-right: 3rem !important;
+      }
+
+      .p-password-toggle {
+        color: $text-primary !important;
+        right: 1rem !important;
+      }
     }
   }
 
-  &__label {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 5px;
-    display: block;
-  }
-
   &__btn {
-    background-color: #666cff;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-  }
+    background: linear-gradient(135deg, $accent-blue 0%, darken($accent-blue, 10%) 100%);
+    color: white !important;
+    width: 100%;
+    padding: 1.2rem !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+    transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease !important;
+    position: relative;
+    overflow: hidden;
 
-  &__btn:hover {
-    background-color: #7b2ffc;
-    transition: 0.3s ease-in-out;
+    &::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+                      45deg,
+                      transparent 25%,
+                      rgba(255, 255, 255, 0.3) 50%,
+                      transparent 75%
+      );
+    }
+      margin-top: 1rem;
+  }
+}
+
+@keyframes shine {
+  to {
+    transform: translate(100%, 100%);
   }
 }

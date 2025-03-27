@@ -3,19 +3,18 @@ import {useUser} from "../../store/User.js"
 import {useNavigate} from "react-router-dom"
 import {
     footer,
-    MAIN_PATH,
-    showToast} from "../../utils/utils.jsx"
+    MAIN_PATH
+} from "../../utils/utils.jsx"
 
 import {Toast} from 'primereact/toast'
 import {InputText} from "primereact/inputtext"
 import {FloatLabel} from "primereact/floatlabel"
 import {Password} from "primereact/password"
+import Swal from "sweetalert2";
 
 const Registration = () => {
     const {registrationUser} = useUser()
     const navigate = useNavigate()
-
-    const toast = React.useRef(null)
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
@@ -25,29 +24,40 @@ const Registration = () => {
         e.preventDefault();
 
         if (!email || !password || !repeatPassword) {
-            return showToast(toast, 'error', 'Ошибка', 'Пожалуйста, заполните необходимые поля', 3000)
+            return Swal.fire({
+                title: 'Ошибка',
+                text: 'Пожалуйста, заполните необходимые поля'
+            })
         } else if (password !== repeatPassword) {
-            return showToast(toast, 'error', 'Ошибка', 'Пароли не совпадают', 3000)
+            return Swal.fire({
+                title: 'Ошибка',
+                text: 'Пароли не совпадают'
+            })
         } else {
             const user = new FormData()
             user.append('email', email)
             user.append('password', password)
 
             registrationUser(user).then(() => {
-                showToast(toast, 'success', 'Добро пожаловать', 'Вы успешно зарегистрировались', 3000)
-
-                setTimeout(() => {
-                    navigate(MAIN_PATH)
-                }, 3000)
+                Swal.fire({
+                    title: 'Дорогой пользователь',
+                    text: 'Поздравляем Вас с успешной регистрацией на нашей платформе'
+                }).then(() => {
+                    setTimeout(() => {
+                        navigate(MAIN_PATH)
+                    }, 2000)
+                })
             }).catch((error) => {
-                return showToast(toast, 'error', 'Ошибка регистрации', `${error.response.data.message}`, 3000)
+                return Swal.fire({
+                    title: 'Ошибка регистрации',
+                    text: error.response.data.message
+                })
             })
         }
     }
 
     return (
         <form className="registration">
-            <Toast ref={toast}/>
             <FloatLabel className="registration__input-group">
                 <InputText id="email"
                            className="registration__input"

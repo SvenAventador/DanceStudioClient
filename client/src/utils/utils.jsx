@@ -1,10 +1,16 @@
 import {Divider} from "primereact/divider";
 import React from "react";
+import {Image} from "primereact/image";
 
 export const MAIN_PATH = '/'
 export const LOGIN_PATH = '/login'
 export const REGISTRATION_PATH = '/registration'
 export const ADMIN_PATH = '/admin'
+export const SUBSCRIPTION_PATH = '/subscription'
+export const TRAINER_PATH = '/trainer'
+export const SPECIALIZATION_PATH = '/specialization'
+export const CLASSES_PATH = '/classes'
+export const PERSONAL_PATH = '/personal'
 
 export const showToast = (toast, severity, summary, detail, life) => {
     toast.current.show({
@@ -28,3 +34,22 @@ export const footer = (
         </ul>
     </>
 )
+
+export const itemTemplate = (file, _) => {
+    return (
+        <div style={{
+            display: 'flex',
+            alignItems: 'center'
+        }}>
+            <Image alt={file.name}
+                   role="presentation"
+                   src={file.objectURL}
+                   style={{
+                       width: 100,
+                       marginRight: 8
+                   }}
+                   preview/>
+            <span>{file.name}</span>
+        </div>
+    )
+}

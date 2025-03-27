@@ -1,0 +1,229 @@
+$primary-blue: #2A5D8A;
+$accent-blue: #3A7BAE;
+$white: #FFFFFF;
+
+@mixin text-ellipsis($lines: 1) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trainers {
+  background: lighten($primary-blue, 55%);
+  padding-bottom: 6rem;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    text-align: center;
+    color: $primary-blue;
+    font-size: 2.8rem;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+  }
+
+  &__all-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 2rem auto 0;
+    padding: 1.2rem 3rem;
+    background: linear-gradient(45deg, $primary-blue, $accent-blue);
+    color: $white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba($primary-blue, 0.3);
+
+      .trainers__arrow {
+        transform: translateX(5px);
+      }
+    }
+  }
+
+  &__arrow {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+  }
+}
+
+.trainer-card {
+  background: $white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-10px);
+
+    .trainer-card__overlay {
+      opacity: 1;
+    }
+  }
+
+  &__image-wrapper {
+    position: relative;
+    height: 350px;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($primary-blue, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: $white;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  &__experience {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__specialization {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  &__content {
+    padding: 2rem;
+  }
+
+  &__name {
+    color: $primary-blue;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    @include text-ellipsis(1);
+  }
+
+  &__bio {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    @include text-ellipsis(3);
+    min-height: 4.8rem;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 2rem;
+    background: $primary-blue;
+    color: $white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: $accent-blue;
+      transform: scale(1.05);
+    }
+  }
+
+  &__arrow {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+  }
+}
+
+@media (max-width: 768px) {
+  .trainers {
+    padding: 4rem 1rem;
+
+    &__title {
+      font-size: 2.2rem;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .trainer-card {
+    &__image-wrapper {
+      height: 300px;
+    }
+
+    &__content {
+      padding: 1.5rem;
+    }
+
+    &__name {
+      font-size: 1.4rem;
+    }
+
+    &__bio {
+      font-size: 0.95rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .trainers {
+    padding: 2rem 1rem;
+
+    &__title {
+      font-size: 1.8rem;
+    }
+
+    &__all-button {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+    }
+  }
+
+  .trainer-card {
+    &__image-wrapper {
+      height: 250px;
+    }
+
+    &__button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

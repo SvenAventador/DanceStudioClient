@@ -1,16 +1,30 @@
-import React from 'react';
+import React from 'react'
 import {
     BrowserRouter,
     Routes,
     Route
-} from "react-router-dom";
+} from "react-router-dom"
 
-import Header from "./user/global/Header.jsx";
-import Footer from "./user/global/Footer.jsx";
-import {ADMIN_PATH, LOGIN_PATH, MAIN_PATH, REGISTRATION_PATH} from "../utils/utils.jsx";
-import Main from "../pages/Main.jsx";
-import Auth from "../pages/Auth.jsx";
-import Admin from "../pages/admin/Admin.jsx";
+import Header from "./user/global/Header.jsx"
+import Footer from "./user/global/Footer.jsx"
+import {
+    ADMIN_PATH, CLASSES_PATH,
+    LOGIN_PATH,
+    MAIN_PATH, PERSONAL_PATH,
+    REGISTRATION_PATH,
+    SPECIALIZATION_PATH,
+    SUBSCRIPTION_PATH,
+    TRAINER_PATH
+} from "../utils/utils.jsx"
+import Main from "../pages/Main.jsx"
+import Auth from "../pages/Auth.jsx"
+import Admin from "../pages/admin/Admin.jsx"
+import Subscription from "../pages/Subscription.jsx";
+import Trainer from "../pages/Trainer.jsx";
+import Specialization from "../pages/Specialization.jsx";
+import Personal from "../pages/user/Personal.jsx";
+import NotFound from "../pages/NotFound.jsx";
+import Classes from "../pages/Classes.jsx";
 
 const Layout = ({children}) => {
     return (
@@ -32,10 +46,10 @@ const SiteNavigation = () => {
             <Routes>
                 <Route path={MAIN_PATH}
                        element={
-                            <Layout>
-                                <Main />
-                            </Layout>
-                       } />
+                           <Layout>
+                               <Main/>
+                           </Layout>
+                       }/>
 
                 <Route path={REGISTRATION_PATH}
                        element={
@@ -54,6 +68,42 @@ const SiteNavigation = () => {
                            <main className="main">
                                <Admin/>
                            </main>
+                       }/>
+                <Route path={SUBSCRIPTION_PATH}
+                       element={
+                           <Layout>
+                               <Subscription/>
+                           </Layout>
+                       }/>
+                <Route path={TRAINER_PATH}
+                       element={
+                           <Layout>
+                               <Trainer/>
+                           </Layout>
+                       }/>
+                <Route path={SPECIALIZATION_PATH}
+                       element={
+                           <Layout>
+                               <Specialization/>
+                           </Layout>
+                       }/>
+                <Route path={CLASSES_PATH}
+                       element={
+                           <Layout>
+                               <Classes/>
+                           </Layout>
+                       }/>
+                <Route path={PERSONAL_PATH + '/:id'}
+                       element={
+                           <Layout>
+                               <Personal/>
+                           </Layout>
+                       }/>
+
+
+                <Route path="*"
+                       element={
+                           <NotFound/>
                        }/>
             </Routes>
         </BrowserRouter>

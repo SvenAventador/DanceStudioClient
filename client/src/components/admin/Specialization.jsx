@@ -18,7 +18,9 @@ import {InputText} from "primereact/inputtext"
 import {Dialog} from "primereact/dialog"
 import {DataTable} from 'primereact/datatable'
 import {Column} from 'primereact/column'
-import {showToast} from "../../utils/utils.jsx"
+import {itemTemplate, showToast} from "../../utils/utils.jsx"
+import {Image} from "primereact/image";
+import {FileUpload} from "primereact/fileupload";
 
 const Specialization = () => {
     const [specializations, setSpecializations] = React.useState([])
@@ -26,7 +28,9 @@ const Specialization = () => {
     const [globalFilter, setGlobalFilter] = React.useState("")
     const [modalVisible, setModalVisible] = React.useState(false)
     const [editData, setEditData] = React.useState(null)
+
     const toast = React.useRef(null)
+    const fileUploadRef = React.useRef(null)
 
     React.useEffect(() => {
         getAll().then(({specializations}) => {
@@ -34,23 +38,72 @@ const Specialization = () => {
         })
     }, [])
 
+    const [selectedFile, setSelectedFile] = React.useState(null)
+    const [, setImagePreview] = React.useState(null)
+
     const openModal = (data = null) => {
-        setEditData(data || {name: ""})
+        setEditData(data || {
+            name: "",
+            image: null
+        })
+
+        if (data?.image) {
+            const imageUrl = `${import.meta.env.VITE_API_IMAGE_URL}${data.image}`
+
+            fetch(imageUrl)
+                .then(res => {
+                    if (!res.ok)
+                        throw new Error("Ошибка загрузки изображения")
+                    return res.blob()
+                })
+                .then(blob => {
+                    const file = new File([blob], data.image, {type: blob.type})
+
+                    file.objectURL = URL.createObjectURL(blob)
+
+                    setImagePreview(imageUrl)
+                    setSelectedFile(file)
+
+                    if (fileUploadRef.current)
+                        fileUploadRef.current.setFiles([file])
+                })
+                .catch(error => {
+                    console.error("Ошибка загрузки изображения:", error)
+                })
+        } else {
+            setImagePreview(null)
+            setSelectedFile(null)
+            if (fileUploadRef.current)
+                fileUploadRef.current.clear()
+        }
+
         setModalVisible(true)
     }
 
     const closeModal = () => {
         setModalVisible(false)
         setEditData(null)
+        setImagePreview(null)
+        setSelectedFile(null)
+        if (fileUploadRef.current)
+            fileUploadRef.current.clear()
     }
 
     const saveData = () => {
         if (!editData?.name)
             return showToast(toast, "error", "Ошибка", "Пожалуйста, введите название направления!", 5000)
+        if (!selectedFile)
+            return showToast(toast, 'error', 'Ошибка при добавлении изображения', 'Пожалуйста, выберите изображение', 5000)
 
         try {
             if (editData.id) {
-                edit(editData.id, editData.name).then(() => {
+                const editSpecialization = new FormData()
+                editSpecialization.append('id', editData.id)
+                editSpecialization.append("name", editData.name)
+                if (selectedFile instanceof File)
+                    editSpecialization.append('image', selectedFile)
+
+                edit(editSpecialization).then(() => {
                     showToast(toast, "success", "Поздравляем", "Запись успешно изменена!", 3000)
                     getAll().then(({specializations}) => {
                         setSpecializations(specializations)
@@ -60,7 +113,12 @@ const Specialization = () => {
                     return showToast(toast, 'error', 'Ошибка при изменении данных', `${error.response.data.message}`, 5000)
                 })
             } else {
-                create(editData.name).then(() => {
+                const addSpecialization = new FormData()
+                addSpecialization.append('name', editData.name)
+                if (selectedFile instanceof File)
+                    addSpecialization.append('image', selectedFile)
+
+                create(addSpecialization).then(() => {
                     showToast(toast, "success", "Поздравляем", "Запись успешно добавлена!", 3000)
                     getAll().then(({specializations}) => {
                         setSpecializations(specializations)
@@ -154,9 +212,39 @@ const Specialization = () => {
                        emptyMessage="Нет доступных данных">
                 <Column field="id"
                         header="ID"
+                        style={{
+                            maxWidth: '50px',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                        }}
                         sortable/>
                 <Column field="name"
-                        header="Название"/>
+                        header="Название"
+                        style={{
+                            maxWidth: '50px',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                        }}/>
+                <Column header="Фото"
+                        style={{
+                            maxWidth: '50px',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                        }}
+                        body={(rowData) => (
+                            rowData.image ?
+                                <Image src={import.meta.env.VITE_API_IMAGE_URL + '/' + rowData.image}
+                                       preview
+                                       alt="trainer"
+                                       style={{
+                                           width: '100px',
+                                           height: '100px',
+                                           objectFit: 'contain'
+                                       }}/> : <div>Нет изображения</div>
+                        )}/>
                 <Column header="Действия"
                         body={(rowData) => (
                             <div className="p-d-flex">
@@ -187,6 +275,26 @@ const Specialization = () => {
                                    onChange={(e) => setEditData({...editData, name: e.target.value})}
                                    className="p-inputtext-lg"/>
                     </div>
+
+                    <FileUpload ref={fileUploadRef}
+                                name="image"
+                                accept="image/*"
+                                customUpload
+                                auto
+                                chooseLabel="Выберите изображение"
+                                uploadLabel="Загрузить"
+                                cancelLabel="Отмена"
+                                maxFileSize={10000000}
+                                multiple={false}
+                                itemTemplate={itemTemplate}
+                                onSelect={(e) => {
+                                    setSelectedFile(e.files[0]);
+                                    setImagePreview(URL.createObjectURL(e.files[0]));
+                                }}
+                                onClear={() => {
+                                    setSelectedFile(null);
+                                    setImagePreview(null);
+                                }}/>
 
                     <div className="p-d-flex p-jc-end p-mt-4">
                         <Button label="Отмена"

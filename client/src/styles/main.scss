@@ -10,11 +10,23 @@
 
 /*pages*/
 @use "pages/auth";
+@use "pages/main";
+@use "pages/notFound";
+@use "pages/personal";
+@use "pages/specialization" as specializationPage;
+@use "pages/subscription" as subscriptionPage;
+@use "pages/trainer" as trainerPage;
 
 /*components*/
 @use "components/global/loader";
+@use "components/global/header";
+@use "components/global/footer";
 @use "components/auth/login";
 @use "components/auth/registration";
+@use "components/main/hero";
+@use "components/main/specialization" as specializationComponent;
+@use "components/main/subscription" as subscriptionComponent;
+@use "components/main/trainer" as trainerComponent;
 
 /*vendor*/
 @use "vendors";

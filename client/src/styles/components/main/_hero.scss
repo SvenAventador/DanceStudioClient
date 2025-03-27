@@ -1,0 +1,194 @@
+$hero-blue: #2A5D8A;
+$hero-accent: #3D8FD1;
+$hero-white: #FFFFFF;
+$hero-black: #1A1A1A;
+$hero-transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$black: #1A1A1A;
+$transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$primary-blue: #2A5D8A;
+$accent-blue: #3D8FD1;
+$white: #FFFFFF;
+
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+
+  &__parallax-wrapper {
+    height: 100%;
+    background:
+            linear-gradient(45deg, rgba($black, 0.4) 0%, rgba($primary-blue, 0.2) 100%),
+            url('https://images.unsplash.com/photo-1547153760-18fc86324498') center/cover;
+    transform: translateZ(0);
+    will-change: transform;
+    transition: transform 0.3s ease-out;
+  }
+
+  &__content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: $white;
+    width: 90%;
+    max-width: 1200px;
+    padding: 2rem;
+  }
+
+  &__title {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation:
+            titleFadeIn 1s ease forwards,
+            textFloat 4s ease-in-out infinite;
+
+    &-line {
+      display: block;
+      text-shadow: 0 5px 15px rgba($black, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  &__text {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation:
+            textFadeIn 1s ease forwards 0.3s,
+            textFloat 4s ease-in-out infinite;
+    position: relative;
+    display: inline-block;
+
+    &-underline {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 2px;
+      background: $white;
+      animation: underlineExpand 1.5s ease forwards 1s;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__cta-button {
+    background: linear-gradient(135deg, $accent-blue 0%, $primary-blue 100%);
+    color: $white;
+    padding: 1.5rem 4rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+            transform $transition,
+            box-shadow $transition;
+    opacity: 0;
+    animation: buttonFadeIn 1s ease forwards 0.6s;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow:
+              0 10px 30px rgba($primary-blue, 0.4),
+              0 0 20px rgba($white, 0.2);
+
+      .cta-button__hover-effect {
+        transform: translateX(100%);
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .cta-button {
+    &__text {
+      position: relative;
+      z-index: 2;
+    }
+
+    &__hover-effect {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+                      90deg,
+                      transparent 0%,
+                      rgba($white, 0.2) 50%,
+                      transparent 100%
+      );
+      transition: transform 0.6s ease;
+    }
+  }
+}
+
+@keyframes shine {
+  to { transform: translate(100%, 100%); }
+}
+
+@keyframes titleFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes textFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes buttonFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes textFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes underlineExpand {
+  from { width: 0; }
+  to { width: 80%; }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 1rem;
+  }
+
+  .hero {
+    height: 90vh;
+
+    &__title {
+      font-size: 2.5rem;
+    }
+
+    &__cta-button {
+      padding: 1rem 2.5rem;
+      font-size: 1rem;
+    }
+  }
+}

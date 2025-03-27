@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
-import Login from "../components/auth/Login.jsx";
-import Registration from "../components/auth/Registration.jsx";
-import {NavLink} from "react-router-dom";
-import {LOGIN_PATH, REGISTRATION_PATH} from "../utils/utils.jsx";
+import React, {useState} from 'react'
+import Login from "../components/auth/Login.jsx"
+import Registration from "../components/auth/Registration.jsx"
+import {NavLink} from "react-router-dom"
+import {
+    LOGIN_PATH,
+    REGISTRATION_PATH
+} from "../utils/utils.jsx"
 
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
