@@ -5,7 +5,7 @@ const Footer = () => {
                 <div className="footer__content">
                     <div className="footer__section">
                         <div className="footer__brand">
-                            <h3 className="footer__logo">BD Dance</h3>
+                            <h3 className="footer__logo">BD Dance Studio</h3>
                             <p className="footer__slogan">Студия современных танцев</p>
                         </div>
                     </div>

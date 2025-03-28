@@ -8,23 +8,28 @@ import {
 import Header from "./user/global/Header.jsx"
 import Footer from "./user/global/Footer.jsx"
 import {
-    ADMIN_PATH, CLASSES_PATH,
+    ADMIN_PATH,
+    CLASSES_PATH,
     LOGIN_PATH,
-    MAIN_PATH, PERSONAL_PATH,
+    MAIN_PATH,
+    PERSONAL_PATH,
     REGISTRATION_PATH,
     SPECIALIZATION_PATH,
     SUBSCRIPTION_PATH,
-    TRAINER_PATH
+    TRAINER_PATH,
+    TRAINER_PERSONAL_PATH
 } from "../utils/utils.jsx"
+
 import Main from "../pages/Main.jsx"
 import Auth from "../pages/Auth.jsx"
 import Admin from "../pages/admin/Admin.jsx"
-import Subscription from "../pages/Subscription.jsx";
-import Trainer from "../pages/Trainer.jsx";
-import Specialization from "../pages/Specialization.jsx";
-import Personal from "../pages/user/Personal.jsx";
-import NotFound from "../pages/NotFound.jsx";
-import Classes from "../pages/Classes.jsx";
+import Subscription from "../pages/Subscription.jsx"
+import Trainer from "../pages/Trainer.jsx"
+import TrainerPerson from "../pages/trainer/Trainer.jsx";
+import Specialization from "../pages/Specialization.jsx"
+import Personal from "../pages/user/Personal.jsx"
+import NotFound from "../pages/NotFound.jsx"
+import Classes from "../pages/Classes.jsx"
 
 const Layout = ({children}) => {
     return (
@@ -69,17 +74,23 @@ const SiteNavigation = () => {
                                <Admin/>
                            </main>
                        }/>
+                <Route path={TRAINER_PATH}
+                       element={
+                           <Layout>
+                               <Trainer/>
+                           </Layout>
+                       }/>
                 <Route path={SUBSCRIPTION_PATH}
                        element={
                            <Layout>
                                <Subscription/>
                            </Layout>
                        }/>
-                <Route path={TRAINER_PATH}
+                <Route path={TRAINER_PERSONAL_PATH}
                        element={
-                           <Layout>
-                               <Trainer/>
-                           </Layout>
+                           <main className="main">
+                               <TrainerPerson/>
+                           </main>
                        }/>
                 <Route path={SPECIALIZATION_PATH}
                        element={

@@ -27,7 +27,13 @@ export const deleteOne = async (id) => {
     const {data} = await $authHost.delete(`subscription/${id}`)
     return data
 }
+
 export const deleteAll = async () => {
     const {data} = await $authHost.delete(`subscription`)
+    return data
+}
+
+export const buy = async (buy) => {
+    const {data} = await $authHost.post('subscription/buy', buy)
     return data
 }

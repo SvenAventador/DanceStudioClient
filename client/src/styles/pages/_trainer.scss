@@ -1,0 +1,311 @@
+$primary-blue: #2A5D8A;
+$accent-blue: #3A7BAE;
+$light-bg: lighten($primary-blue, 55%);
+$button-gradient: linear-gradient(135deg, $primary-blue 0%, $accent-blue 100%);
+
+.trainers {
+  margin-top: 5rem;
+  padding: 5rem 4rem;
+  background: $light-bg;
+  position: relative;
+  overflow: hidden;
+
+  .dynamic-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:rgba($accent-blue, 0.05);
+    background-size: 25px 25px;
+    animation: grid-flow 40s linear infinite;
+  }
+}
+
+.animated-title {
+  text-align: center;
+  font-size: 3.2rem;
+  color: $primary-blue;
+  margin-bottom: 4rem;
+  position: relative;
+  font-weight: 800;
+
+  .title-main {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 1rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 3px;
+      background: $accent-blue;
+      border-radius: 2px;
+    }
+  }
+
+  .title-reflection {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 30px;
+    background: radial-gradient(ellipse at center,
+            rgba($accent-blue, 0.2) 0%,
+            transparent 70%);
+    filter: blur(10px);
+  }
+}
+
+.trainers__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.trainer-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba($primary-blue, 0.08);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+  animation: card-enter 0.6s ease-out var(--delay) both;
+
+  &:hover {
+    transform: translateY(-10px) rotateX(2deg);
+    box-shadow: 0 20px 40px rgba($primary-blue, 0.15);
+
+    .trainer-photo {
+      transform: scale(1.05);
+    }
+
+    .specialization-tag {
+      background: $button-gradient;
+      color: white;
+    }
+
+    .action-button {
+      background: $button-gradient;
+      color: white;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.card-wave-effect {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: linear-gradient(
+                  120deg,
+                  rgba($accent-blue, 0) 40%,
+                  rgba($accent-blue, 0.1) 50%,
+                  rgba($accent-blue, 0) 60%
+  );
+  opacity: 0;
+  transition: opacity 0.6s;
+  pointer-events: none;
+}
+
+.image-wrapper {
+  height: 320px;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent 60%, rgba(white, 0.9));
+  }
+}
+
+.trainer-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.specialization-tag {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background: rgba($accent-blue, 0.1);
+  color: $primary-blue;
+  padding: 0.6rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  z-index: 1;
+  max-width: calc(100% - 3rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: all 0.4s;
+  backdrop-filter: blur(4px);
+}
+
+.info-wrapper {
+  padding: 2rem;
+}
+
+.trainer-name {
+  color: $primary-blue;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: $accent-blue;
+  }
+}
+
+.experience {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba($primary-blue, 0.8);
+  margin-top: 0.5rem;
+}
+
+.bio {
+  color: rgba($primary-blue, 0.9);
+  line-height: 1.6;
+  margin: 1.5rem 0;
+  min-height: 80px;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: rgba($accent-blue, 0.1);
+  border: 2px solid $accent-blue;
+  color: $accent-blue;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+                    45deg,
+                    transparent,
+                    rgba(white, 0.3),
+                    transparent
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s;
+  }
+
+  &:hover {
+    color: white;
+
+    &::before {
+      left: 50%;
+    }
+
+    .button-arrows {
+      transform: translateX(5px);
+    }
+  }
+}
+
+.button-arrows {
+  display: flex;
+  gap: 2px;
+  transition: transform 0.3s;
+
+  &::before,
+  &::after {
+    content: '';
+    width: 8px;
+    height: 2px;
+    background: currentColor;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes grid-flow {
+  from { background-position: 0 0; }
+  to { background-position: 25px 25px; }
+}
+
+@media (max-width: 1200px) {
+  .trainers__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .trainers {
+    padding: 4rem 1rem;
+
+    .animated-title {
+      font-size: 2.4rem;
+    }
+  }
+
+  .trainers__grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .image-wrapper {
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .specialization-tag {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .action-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

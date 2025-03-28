@@ -1,0 +1,453 @@
+$primary-blue: #2A5D8A;
+$accent-blue: #3A7BAE;
+$white: #FFFFFF;
+$gradient-angle: 135deg;
+
+@mixin text-ellipsis($lines: 1) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.subscriptions {
+  margin-top: 5rem;
+  padding: 10rem 4rem;
+  background: linear-gradient(160deg, lighten($primary-blue, 58%) 0%, lighten($primary-blue, 53%) 100%);
+
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    text-align: center;
+    color: $primary-blue;
+    font-size: 3.2rem;
+    margin-bottom: 6rem;
+    position: relative;
+    font-weight: 800;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      background: linear-gradient(90deg, $accent-blue 0%, rgba($accent-blue, 0.2) 100%);
+      border-radius: 2px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    animation: emptyEntrance 0.8s ease-out;
+  }
+}
+
+.subscription-card {
+  background: $white;
+  border-radius: 25px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+  animation: cardEntrance 0.6s ease-out both;
+  animation-delay: var(--delay);
+
+  &:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+
+    .subscription-card__button {
+      background: linear-gradient($gradient-angle, $accent-blue 0%, darken($accent-blue, 8%) 100%);
+      padding-right: 1.8rem;
+    }
+
+    .subscription-card__shine {
+      opacity: 1;
+      transition-delay: 0.1s;
+    }
+  }
+
+  &__shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150%;
+    height: 150%;
+    background: linear-gradient(
+                    120deg,
+                    rgba(255,255,255,0) 40%,
+                    rgba(255,255,255,0.15) 50%,
+                    rgba(255,255,255,0) 60%
+    );
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
+  }
+
+  &__header {
+    position: relative;
+    margin-bottom: 2rem;
+    z-index: 1;
+  }
+
+  &__name {
+    font-size: 1.8rem;
+    color: darken($primary-blue, 8%);
+    @include text-ellipsis(2);
+    line-height: 1.4;
+    padding-right: 70px;
+    font-weight: 700;
+  }
+
+  &__badge {
+    position: absolute;
+    top: -0.8rem;
+    right: -2.5rem;
+    background: linear-gradient(45deg, $accent-blue 0%, lighten($accent-blue, 8%) 100%);
+    color: $white;
+    padding: 0.8rem 3rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 700;
+    transform: rotate(45deg);
+    box-shadow: 0 5px 15px rgba($accent-blue, 0.3);
+
+    span {
+      display: block;
+      transform: rotate(-45deg);
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      animation: particleFloat 2s ease-in-out infinite;
+
+      @for $i from 1 through 6 {
+        &:nth-child(#{$i}) {
+          top: random(80) + 10%;
+          left: random(80) + 10%;
+          animation-delay: $i * 0.2s;
+        }
+      }
+    }
+  }
+
+  &__description {
+    color: desaturate(darken($primary-blue, 20%), 30%);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    @include text-ellipsis(4);
+    min-height: 6.2rem;
+    font-size: 1.05rem;
+  }
+
+  &__details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    padding: 2rem 0;
+    border-top: 2px dashed rgba($primary-blue, 0.12);
+    border-bottom: 2px dashed rgba($primary-blue, 0.12);
+    position: relative;
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__amount {
+    color: $accent-blue;
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1;
+    @include text-ellipsis(1);
+    text-shadow: 0 2px 4px rgba($accent-blue, 0.1);
+  }
+
+  &__period {
+    color: rgba($primary-blue, 0.6);
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
+
+  &__classes {
+    text-align: right;
+  }
+
+  &__count {
+    color: $primary-blue;
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1;
+    @include text-ellipsis(1);
+  }
+
+  &__label {
+    color: rgba($primary-blue, 0.6);
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
+
+  &__button {
+    width: 100%;
+    padding: 1.4rem;
+    background: linear-gradient($gradient-angle, $primary-blue 0%, darken($primary-blue, 8%) 100%);
+    color: $white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      position: relative;
+      z-index: 1;
+    }
+
+    &:hover {
+      transform: scale(0.98);
+
+      .subscription-card__arrow {
+        transform: translateX(5px);
+      }
+    }
+  }
+
+  &__arrow {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 1200px) {
+  .subscriptions__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .subscriptions {
+    padding: 5rem 1.5rem;
+
+    &__title {
+      font-size: 2.4rem;
+      margin-bottom: 4rem;
+    }
+  }
+
+  .subscriptions__grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .subscription-card {
+    padding: 2rem;
+
+    &__badge {
+      right: -3rem;
+      padding: 0.7rem 3.2rem;
+    }
+
+    &__amount {
+      font-size: 2.2rem;
+    }
+
+    &__count {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .subscriptions {
+    padding: 4rem 1rem;
+
+    &__title {
+      font-size: 2rem;
+    }
+  }
+
+  .subscription-card {
+    padding: 1.8rem;
+
+    &__name {
+      font-size: 1.6rem;
+    }
+
+    &__description {
+      font-size: 1rem;
+    }
+  }
+}
+
+.empty {
+  &__icon {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 2rem;
+  }
+
+  &__pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 4px solid rgba($accent-blue, 0.3);
+    border-radius: 50%;
+    animation: pulsate 2s ease-in-out infinite;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid $accent-blue;
+      border-radius: 50%;
+      animation: pulsateInner 2s ease-in-out infinite;
+    }
+  }
+
+  &__symbol {
+    position: relative;
+    width: 60%;
+    height: 60%;
+    fill: $primary-blue;
+    animation: floating 3s ease-in-out infinite;
+    transform: translateY(0);
+  }
+
+  &__title {
+    color: $primary-blue;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    animation: textScale 1.5s ease-in-out infinite;
+  }
+
+  &__text {
+    color: rgba($primary-blue, 0.8);
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@keyframes emptyEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes pulsateInner {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes textScale {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 0 rgba($accent-blue, 0);
+  }
+  50% {
+    transform: scale(1.02);
+    text-shadow: 0 2px 10px rgba($accent-blue, 0.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .subscriptions__empty {
+    padding: 3rem 1rem;
+  }
+
+  .empty {
+    &__icon {
+      width: 100px;
+      height: 100px;
+    }
+
+    &__title {
+      font-size: 1.8rem;
+    }
+
+    &__text {
+      font-size: 1rem;
+    }
+  }
+}

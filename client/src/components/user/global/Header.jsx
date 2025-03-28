@@ -9,6 +9,7 @@ import {
     LOGIN_PATH,
     MAIN_PATH,
     PERSONAL_PATH,
+    SPECIALIZATION_PATH,
     SUBSCRIPTION_PATH,
     TRAINER_PATH
 } from "../../../utils/utils.jsx"
@@ -27,14 +28,14 @@ const Header = () => {
                 </Link>
 
                 <nav className={`nav-menu ${isMenuOpen ? 'open' : ''}`}>
-                    <Link to={SUBSCRIPTION_PATH} onClick={() => setIsMenuOpen(false)}>Наши абонементы</Link>
-                    <Link to={TRAINER_PATH} onClick={() => setIsMenuOpen(false)}>Наши тренера</Link>
-                    <Link to={SUBSCRIPTION_PATH} onClick={() => setIsMenuOpen(false)}>Наши направления</Link>
-                    <Link to={CLASSES_PATH} onClick={() => setIsMenuOpen(false)}>Доступные занятия</Link>
+                    <Link to={SUBSCRIPTION_PATH} onClick={() => setIsMenuOpen(false)}>Абонементы</Link>
+                    <Link to={TRAINER_PATH} onClick={() => setIsMenuOpen(false)}>Тренера</Link>
+                    <Link to={SPECIALIZATION_PATH} onClick={() => setIsMenuOpen(false)}>Направления</Link>
+                    <Link to={CLASSES_PATH} onClick={() => setIsMenuOpen(false)}>Занятия</Link>
                 </nav>
 
                 <button className="login-btn"
-                        onClick={() => user ? history(PERSONAL_PATH + user.id) : history(LOGIN_PATH)}>
+                        onClick={() => user ? history(PERSONAL_PATH + '/' + user.id) : history(LOGIN_PATH)}>
                     {user ? "Личный кабинет" : "Войти"}
                 </button>
 

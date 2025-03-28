@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getAll } from "../../../http/trainer.js";
+import {TRAINER_PATH} from "../../../utils/utils.jsx";
 
 const Trainers = () => {
     const [trainers, setTrainers] = React.useState([]);
@@ -47,7 +48,7 @@ const Trainers = () => {
                     ))}
                 </div>
 
-                <Link to="/trainers"
+                <Link to={TRAINER_PATH}
                       className="trainers__all-button">
                     Просмотреть всех тренеров
                     <svg className="trainers__arrow"

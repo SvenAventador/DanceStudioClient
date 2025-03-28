@@ -15,7 +15,7 @@ const Auth = () => {
             <div className="auth__form-container">
                 <div className="auth__header">
                     <h2 className="auth__title">
-                        BDDance Studio
+                        BD Dance Studio
                     </h2>
                 </div>
                 <p className="auth__welcome">

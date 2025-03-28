@@ -4,7 +4,8 @@ import {useNavigate} from "react-router-dom"
 import {
     ADMIN_PATH,
     footer,
-    MAIN_PATH
+    MAIN_PATH,
+    TRAINER_PERSONAL_PATH
 } from "../../utils/utils.jsx"
 
 import {InputText} from "primereact/inputtext"
@@ -51,7 +52,7 @@ const Login = () => {
                     text: "Поздравляем Вас с успешным входом в систему!",
                 }).then(() => {
                     setTimeout(() => {
-                        data.role === 'ADMIN' ? navigate(ADMIN_PATH) : navigate(MAIN_PATH)
+                        data.role === 'ADMIN' ? navigate(ADMIN_PATH) : (data.role === 'TRAINER' ? navigate(TRAINER_PERSONAL_PATH) : navigate(MAIN_PATH))
                     }, 2000)
                 })
             }).catch((error) => {

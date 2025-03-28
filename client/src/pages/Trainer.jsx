@@ -1,48 +1,86 @@
-import React from 'react';
+import React from 'react'
+import {getAll} from "../http/trainer.js"
 
 const Trainer = () => {
+    const [trainers, setTrainers] = React.useState([]);
+
+    React.useEffect(() => {
+        getAll().then(({trainers}) => {
+            setTrainers(trainers);
+        });
+    }, []);
+
     return (
-        <div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aperiam architecto est molestias nisi
-                officia porro rem voluptatibus voluptatum. Deleniti ea et facere id ipsam maxime nulla provident
-                tempore.
+        <section className="trainers">
+            <div className="dynamic-grid"></div>
+
+            <div className="trainers__container">
+                <h2 className="animated-title">
+                    <span className="title-main">Наши тренеры</span>
+                    <span className="title-reflection"></span>
+                </h2>
+                {
+                    trainers.length > 0 ? (
+                        <div className="trainers__grid">
+                            {trainers.map((trainer, index) => (
+                                <div
+                                    key={trainer.id}
+                                    className="trainer-card"
+                                    style={{'--delay': index * 0.15 + 's'}}
+                                >
+                                    <div className="card-wave-effect"></div>
+                                    <div className="card-content">
+                                        <div className="image-wrapper">
+                                            <img
+                                                src={import.meta.env.VITE_API_IMAGE_URL + '/' + trainer.image}
+                                                alt={trainer.user.fullName}
+                                                className="trainer-photo"
+                                            />
+                                            <div className="specialization-tag">
+                                                {trainer.specialization.name}
+                                            </div>
+                                        </div>
+
+                                        <div className="info-wrapper">
+                                            <h3 className="trainer-name">
+                                                {trainer.user.fullName}
+                                                <span className="experience">
+                                            {trainer.experience} лет опыта
+                                        </span>
+                                            </h3>
+
+                                            <p className="bio">
+                                                {trainer.bio}
+                                            </p>
+
+                                            <button className="action-button">
+                                                Посмотреть занятия
+                                                <svg className="subscription-card__arrow" viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="subscriptions__empty">
+                            <div className="empty__icon">
+                                <div className="empty__pulse"></div>
+                                <svg className="empty__symbol" viewBox="0 0 24 24">
+                                    <path
+                                        d="M11 15h2v2h-2zm0-8h2v6h-2zm1-5C6.47 2 2 6.5 2 12a10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2m0 18a8 8 0 01-8-8 8 8 0 018-8 8 8 0 018 8 8 8 0 01-8 8"/>
+                                </svg>
+                            </div>
+                            <h3 className="empty__title">Нет доступных тренеров</h3>
+                            <p className="empty__text">Что-то не так... Мы скоро исправим это!</p>
+                        </div>
+                    )
+                }
             </div>
-            <div>Animi cum dolorem doloremque eaque eligendi eveniet excepturi in ipsum iste laudantium, magnam mollitia
-                non nostrum, obcaecati odit placeat provident quae quam quisquam sapiente soluta sunt suscipit
-                temporibus tenetur ut?
-            </div>
-            <div>Beatae cum delectus id illo itaque modi molestiae molestias, neque optio quas? A asperiores aut cum et
-                excepturi impedit ipsam nihil perferendis quam, quidem recusandae voluptatibus? Aliquam ea optio quis.
-            </div>
-            <div>Ab animi consequuntur corporis distinctio, doloribus est facilis fugiat id illum impedit ipsam iusto
-                magnam nesciunt nulla obcaecati quaerat quasi reiciendis repudiandae vero voluptates! Aliquam ipsa
-                maiores praesentium similique tempora.
-            </div>
-            <div>Asperiores delectus deleniti praesentium? Aliquid architecto consequatur deleniti dolore eligendi
-                facere fuga ipsa, molestiae, mollitia nulla officia rem similique sit, soluta veniam? Aut ipsa labore
-                molestiae nobis odit sapiente voluptatum?
-            </div>
-            <div>Asperiores assumenda eveniet ipsam possimus praesentium similique temporibus unde ut? Aliquam amet
-                eaque earum enim eos eveniet illo incidunt maxime, molestiae, officia placeat praesentium quod.
-                Consequatur hic laborum odit reiciendis.
-            </div>
-            <div>Aliquid consequatur debitis earum exercitationem nisi nostrum quia quos repellat velit voluptatem.
-                Accusamus, cumque, doloremque dolores eos ipsam ipsum maiores maxime nobis numquam quis recusandae
-                repellat sit vel velit voluptate.
-            </div>
-            <div>Autem exercitationem laudantium minus obcaecati omnis quia, quidem tenetur. Accusamus, aspernatur at
-                consequuntur debitis deserunt dolor iusto magnam natus optio perferendis quibusdam quidem ratione rem
-                sunt velit vero voluptate! Illo!
-            </div>
-            <div>Ab accusantium aperiam at atque, cupiditate dignissimos dolorem eaque eius eligendi est ipsa iste
-                itaque labore magnam nesciunt nostrum placeat porro quas recusandae reprehenderit sequi soluta
-                temporibus tenetur veritatis voluptas!
-            </div>
-            <div>A amet asperiores debitis ipsam nam tenetur voluptatum. A ab distinctio doloremque eligendi tempora.
-                Assumenda corporis cumque est eveniet ipsa necessitatibus nostrum, officiis optio perferendis placeat
-                possimus sed, sequi, sunt?
-            </div>
-        </div>
+        </section>
     );
 };
 

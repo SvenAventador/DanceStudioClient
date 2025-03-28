@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {getAll} from "../../../http/specialization.js";
+import {SPECIALIZATION_PATH} from "../../../utils/utils.jsx";
 
 const Specializations = () => {
     const [specializations, setSpecializations] = React.useState([])
@@ -32,7 +33,7 @@ const Specializations = () => {
                     ))}
                 </div>
 
-                <Link to="/directions"
+                <Link to={SPECIALIZATION_PATH}
                       className="directions__button">
                     Просмотреть все
                 </Link>

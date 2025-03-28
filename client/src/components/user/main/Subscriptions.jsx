@@ -1,6 +1,7 @@
 import React from 'react'
 import {getAll} from "../../../http/subscription.js"
 import {Link} from "react-router-dom";
+import {SUBSCRIPTION_PATH} from "../../../utils/utils.jsx";
 
 const Subscriptions = () => {
     const [subscriptions, setSubscriptions] = React.useState([])
@@ -55,7 +56,7 @@ const Subscriptions = () => {
                         </article>
                     ))}
                 </div>
-                <Link to="/subscriptions"
+                <Link to={SUBSCRIPTION_PATH}
                       className="subscriptions__all-button">
                     <span>Просмотреть все абонементы</span>
                     <svg className="subscriptions__arrow" viewBox="0 0 24 24">

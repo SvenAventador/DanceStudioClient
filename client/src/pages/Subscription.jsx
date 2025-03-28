@@ -1,48 +1,114 @@
-import React from 'react';
+import React from 'react'
+import {buy, getAll} from "../http/subscription.js"
+import {useUser} from "../store/User.js";
+import {showToast} from "../utils/utils.jsx";
+import {Toast} from "primereact/toast";
 
 const Subscription = () => {
-    return (
-        <div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquam blanditiis debitis
-                dignissimos est eum ex illo, iste iure magni molestiae, non pariatur perferendis placeat quia quidem quo
-                ullam voluptatem?
-            </div>
-            <div>A animi aperiam asperiores at dicta dolore dolorem dolorum impedit laboriosam molestiae obcaecati
-                omnis, pariatur quia, rem reprehenderit! A accusamus aperiam atque dolor dolorem natus odio quas
-                quisquam rerum suscipit!
-            </div>
-            <div>Ad dignissimos dolore ea excepturi ipsum magni minus quae tenetur? Aliquam cum exercitationem fugit in
-                itaque. Aliquam at facere iure laborum magni maiores nihil nulla qui reiciendis repellendus, rerum,
-                voluptate!
-            </div>
-            <div>Accusamus accusantium at blanditiis culpa cum, cupiditate doloremque doloribus eligendi enim et
-                excepturi expedita ipsam numquam pariatur soluta, ullam velit veritatis vitae. Assumenda dignissimos
-                dolores illum maiores non pariatur praesentium.
-            </div>
-            <div>Placeat soluta, voluptas. Animi blanditiis culpa deleniti dicta dolores ea eaque expedita, explicabo
-                facilis fugit id ipsum iste, maiores minima modi molestiae molestias odio recusandae repudiandae
-                temporibus tenetur totam vel?
-            </div>
-            <div>At blanditiis, delectus dicta eaque eius est, eveniet ex laudantium mollitia, nam nihil repellat
-                tempora tenetur vel veritatis vitae voluptatibus. Ad corporis dignissimos ea eaque fugit natus quas
-                ratione voluptatum.
-            </div>
-            <div>Ab aliquid esse eum illo impedit ipsa ipsum laboriosam maxime molestiae, odit omnis placeat porro quas
-                rerum sed suscipit vero. Commodi fugit id iusto labore mollitia nisi obcaecati possimus sit?
-            </div>
-            <div>Aut eligendi explicabo magni unde veritatis. Ad cumque ducimus nisi odio, sint tempora vitae! Aperiam
-                aut culpa fuga impedit ipsam minus numquam odit perspiciatis placeat quod rem, totam ullam voluptate.
-            </div>
-            <div>Animi corporis dolorum impedit in neque sapiente suscipit, tempore. Consequuntur dicta dolorum, eveniet
-                harum laborum necessitatibus omnis quos rerum vero! Aliquid consequatur dignissimos doloremque enim hic
-                ipsam nesciunt numquam saepe!
-            </div>
-            <div>Amet at autem, delectus eaque eius, facere harum inventore itaque perspiciatis quaerat, quam quisquam
-                quo ratione reiciendis sit voluptas voluptatum! Dolor fugiat impedit minus mollitia nam odio
-                perspiciatis quod vel!
-            </div>
-        </div>
-    );
-};
+    const [subscriptions, setSubscriptions] = React.useState([])
 
-export default Subscription;
+    const toast = React.useRef(null);
+
+    React.useEffect(() => {
+        getAll().then(({subscription}) => {
+            setSubscriptions(subscription)
+        })
+    }, [])
+
+    const {user} = useUser()
+
+    const buySubscription = (e, subscriptionId) => {
+        e.preventDefault()
+
+        if (!user)
+            return showToast(toast, 'error', 'Ошибка покупки абонемента', 'Перед покупкой абонемента необходимо авторизоваться', 5000)
+
+        const data = new FormData()
+        data.append('userId', user.id)
+        data.append('subscriptionId', subscriptionId)
+
+        buy(data).then(({message}) => {
+            return showToast(toast, 'success', 'Поздравляем', `${message}`, 5000)
+        }).catch((error) => {
+            return showToast(toast, 'error', 'Ошибка покупки абонемента', `${error.response.data.message}`, 5000)
+        })
+    }
+
+    return (
+        <section className="subscriptions">
+            <Toast ref={toast}/>
+            <div className="subscriptions__container">
+                <h2 className="subscriptions__title">Абонементы</h2>
+
+                {
+                    subscriptions.length > 0 ? (
+                        <div className="subscriptions__grid">
+                            {subscriptions.map((sub, index) => (
+                                <div key={sub.id}
+                                     className="subscription-card"
+                                     data-aos="card-glow"
+                                     data-aos-delay={index * 100}>
+                                    <div className="subscription-card__hover-layer"></div>
+                                    <div className="subscription-card__glow"></div>
+
+                                    <div className="subscription-card__content">
+                                        <h3 className="subscription-card__name"
+                                            title={sub.name}>
+                                    <span data-text={sub.name}>
+                                        {sub.name}
+                                    </span>
+                                        </h3>
+
+                                        <p className="subscription-card__description"
+                                           title={sub.description}>
+                                            {sub.description}
+                                        </p>
+
+                                        <div className="subscription-card__details">
+                                            <div className="subscription-card__price">
+                                        <span className="subscription-card__amount">
+                                            {sub.price}₽
+                                        </span>
+                                                <span className="subscription-card__period">/месяц</span>
+                                            </div>
+
+                                            <div className="subscription-card__classes">
+                                        <span className="subscription-card__count">
+                                            {sub.classCount}
+                                        </span>
+                                                <span className="subscription-card__label">занятий</span>
+                                            </div>
+                                        </div>
+
+                                        <button className="subscription-card__button"
+                                                onClick={(e) => buySubscription(e, sub.id)}>
+                                            <span className="button__text">Купить абонемент</span>
+                                            <div className="button__liquid"></div>
+                                            <svg className="subscription-card__arrow" viewBox="0 0 24 24">
+                                                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="subscriptions__empty">
+                            <div className="empty__icon">
+                                <div className="empty__pulse"></div>
+                                <svg className="empty__symbol" viewBox="0 0 24 24">
+                                    <path
+                                        d="M11 15h2v2h-2zm0-8h2v6h-2zm1-5C6.47 2 2 6.5 2 12a10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2m0 18a8 8 0 01-8-8 8 8 0 018-8 8 8 0 018 8 8 8 0 01-8 8"/>
+                                </svg>
+                            </div>
+                            <h3 className="empty__title">Нет доступных абонементов</h3>
+                            <p className="empty__text">Скоро мы добавим новые предложения</p>
+                        </div>
+                    )
+                }
+            </div>
+        </section>
+    )
+}
+
+export default Subscription

@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Classes = () => {
+const Trainer = () => {
     return (
         <div>
-            
+            Тренер
         </div>
     );
 };
 
-export default Classes;
+export default Trainer;
