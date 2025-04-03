@@ -1,14 +1,25 @@
 import React from 'react'
 import {getAll} from "../http/trainer.js"
+import {CLASSES_PATH} from "../utils/utils.jsx"
+import {useNavigate} from "react-router-dom"
+import useTrainer from "../store/Trainer.js";
 
 const Trainer = () => {
     const [trainers, setTrainers] = React.useState([]);
+    const history = useNavigate()
+
+    const {setSelectedTrainer} = useTrainer()
 
     React.useEffect(() => {
         getAll().then(({trainers}) => {
             setTrainers(trainers);
-        });
-    }, []);
+        })
+    }, [])
+
+    const handleSelectTrainer = (trainer) => {
+        setSelectedTrainer(trainer)
+        history(CLASSES_PATH)
+    }
 
     return (
         <section className="trainers">
@@ -23,19 +34,15 @@ const Trainer = () => {
                     trainers.length > 0 ? (
                         <div className="trainers__grid">
                             {trainers.map((trainer, index) => (
-                                <div
-                                    key={trainer.id}
-                                    className="trainer-card"
-                                    style={{'--delay': index * 0.15 + 's'}}
-                                >
+                                <div key={trainer.id}
+                                     className="trainer-card"
+                                     style={{'--delay': index * 0.15 + 's'}}>
                                     <div className="card-wave-effect"></div>
                                     <div className="card-content">
                                         <div className="image-wrapper">
-                                            <img
-                                                src={import.meta.env.VITE_API_IMAGE_URL + '/' + trainer.image}
-                                                alt={trainer.user.fullName}
-                                                className="trainer-photo"
-                                            />
+                                            <img src={import.meta.env.VITE_API_IMAGE_URL + '/' + trainer.image}
+                                                 alt={trainer.user.fullName}
+                                                 className="trainer-photo"/>
                                             <div className="specialization-tag">
                                                 {trainer.specialization.name}
                                             </div>
@@ -44,16 +51,15 @@ const Trainer = () => {
                                         <div className="info-wrapper">
                                             <h3 className="trainer-name">
                                                 {trainer.user.fullName}
-                                                <span className="experience">
-                                            {trainer.experience} лет опыта
-                                        </span>
+                                                <span className="experience">{trainer.experience} лет опыта </span>
                                             </h3>
 
                                             <p className="bio">
                                                 {trainer.bio}
                                             </p>
 
-                                            <button className="action-button">
+                                            <button className="action-button"
+                                            onClick={() => handleSelectTrainer(trainer)}>
                                                 Посмотреть занятия
                                                 <svg className="subscription-card__arrow" viewBox="0 0 24 24">
                                                     <path

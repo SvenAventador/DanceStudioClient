@@ -265,10 +265,10 @@ const Subscription = () => {
                                  })}
                                  placeholder="Цена"/>
 
-                    <InputText value={editData?.classCount || ""}
+                    <InputNumber value={editData?.classCount || 0}
                                onChange={(e) => setEditData({
                                    ...editData,
-                                   classCount: e.target.value
+                                   classCount: e.value
                                })}
                                placeholder="Количество занятий"/>
 

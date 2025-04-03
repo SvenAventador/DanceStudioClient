@@ -23,6 +23,7 @@ import {itemTemplate, showToast} from "../../utils/utils.jsx"
 import {Image} from "primereact/image"
 import {InputTextarea} from "primereact/inputtextarea"
 import {InputMask} from "primereact/inputmask"
+import {InputNumber} from "primereact/inputnumber"
 
 const Trainer = () => {
     const [trainers, setTrainers] = React.useState([])
@@ -52,7 +53,7 @@ const Trainer = () => {
             email: "",
             fullName: "",
             phone: "",
-            experience: "",
+            experience: 0,
             bio: "",
             specializationId: null,
             image: null
@@ -126,7 +127,7 @@ const Trainer = () => {
                     editTrainer.append('image', selectedFile)
 
                 edit(editTrainer).then(() => {
-                    showToast(toast, "success", "Поздравляем", "Запись успешно изменена!", 3000);
+                    showToast(toast, "success", "Поздравляем", "Запись успешно изменена!", 3000)
                     getAll().then(({trainers}) => {
                         setTrainers(trainers)
                     })
@@ -172,7 +173,7 @@ const Trainer = () => {
             accept: async () => {
                 try {
                     deleteOne(id).then(() => {
-                        showToast(toast, "success", "warn", "Запись успешно удалена", 3000);
+                        showToast(toast, "success", "warn", "Запись успешно удалена", 3000)
                         getAll().then(({trainers}) => {
                             setTrainers(trainers)
                         })
@@ -355,10 +356,10 @@ const Trainer = () => {
                                                     placeholder="+7 (999) 999-99-99"/>
                     }
 
-                    <InputText value={editData?.experience || ""}
+                    <InputNumber value={editData?.experience || 0}
                                onChange={(e) => setEditData({
                                    ...editData,
-                                   experience: e.target.value
+                                   experience: e.value
                                })}
                                placeholder="Опыт"/>
 

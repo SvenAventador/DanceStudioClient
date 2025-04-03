@@ -1,48 +1,174 @@
-import React from 'react';
+import React from 'react'
+import {getAll} from "../http/classes.js"
+import {getAll as getAllTrainer} from "../http/trainer.js"
+import {getAll as getAllSpecialization} from "../http/specialization.js"
+import useSpecialization from "../store/Specialization.js"
+import useTrainer from "../store/Trainer.js"
+import {useNavigate} from "react-router-dom"
+import {CURRENT_CLASS} from "../utils/utils.jsx";
 
 const Classes = () => {
-    return (
-        <div>
-            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci alias blanditiis corporis cum
-                dignissimos distinctio, dolorem, enim exercitationem expedita incidunt labore molestiae nemo nobis qui
-                quia quod ratione tempore velit!
-            </div>
-            <div>A corporis eius, enim error esse, explicabo facilis ipsum necessitatibus nesciunt nisi, omnis
-                perferendis provident quia quos reprehenderit tempore velit! Aliquam consequuntur dolores natus odit,
-                qui sequi. Ad dignissimos, doloribus.
-            </div>
-            <div>Ad culpa cumque, debitis ea eligendi excepturi fugiat ipsa mollitia nemo non pariatur porro quo
-                reprehenderit sed suscipit temporibus vel voluptates. Amet consequatur dolore est, expedita facilis
-                harum quibusdam rem.
-            </div>
-            <div>Ab at, ea, eligendi eos error eum fuga impedit inventore iusto laboriosam minus molestiae omnis
-                perferendis praesentium quas quibusdam recusandae. Aliquam et labore laborum mollitia quod, similique
-                tempore totam ullam.
-            </div>
-            <div>Ab animi facilis officiis. Corporis distinctio eveniet incidunt omnis, rem sint soluta tempora?
-                Assumenda consequatur, dolores eligendi impedit iusto molestiae nesciunt nihil odio optio, quisquam
-                ratione repellat rerum soluta sunt!
-            </div>
-            <div>Accusantium ad adipisci commodi, cum delectus, dolorum ducimus esse illum impedit iure laborum magnam
-                odit officiis quam qui quia saepe sapiente veritatis voluptas voluptates! Aperiam debitis fuga impedit
-                iure officiis.
-            </div>
-            <div>Accusamus aperiam consectetur consequatur dicta dolores eveniet fuga hic iste itaque minima minus modi
-                molestiae necessitatibus nostrum pariatur, porro possimus quam quibusdam quisquam quos ratione rem
-                repudiandae soluta temporibus vel!
-            </div>
-            <div>Ab qui quia vel? Autem beatae dignissimos eius in ipsa odit rerum temporibus. Aspernatur autem commodi
-                consequuntur dolores, ipsam libero obcaecati odit officia optio provident quis quo, tempore totam unde?
-            </div>
-            <div>Alias culpa deserunt doloribus expedita fuga in, ipsum magnam maiores mollitia neque non numquam
-                tenetur veritatis. Architecto assumenda aut commodi corporis cumque dolores illo inventore molestiae,
-                perspiciatis provident reprehenderit sed?
-            </div>
-            <div>Aperiam esse impedit natus non quas rem suscipit vel. Aliquam, aperiam at consectetur corporis culpa
-                eius error et facere magni minima odio omnis possimus quos saepe sapiente, similique tempora unde?
-            </div>
-        </div>
-    );
-};
+    const [classes, setClasses] = React.useState([])
+    const [trainer, setTrainer] = React.useState([])
+    const [specialization, setSpecialization] = React.useState([])
 
-export default Classes;
+    const history = useNavigate()
+
+    const {selectedSpecialization, clearSelectedSpecialization} = useSpecialization()
+    const {selectedTrainer, clearSelectedTrainer} = useTrainer()
+
+    const levels = [
+        {value: 'Elementary', label: 'Начальный'},
+        {value: 'Intermediate', label: 'Средний'},
+        {value: 'UpperIntermediate', label: 'Продвинутый'},
+    ]
+
+    const [level, setLevel] = React.useState('')
+    const [trainerId, setTrainerId] = React.useState(selectedTrainer?.id || '')
+    const [specializationId, setSpecializationId] = React.useState(selectedSpecialization?.id || '')
+
+    React.useEffect(() => {
+        setTrainerId(selectedTrainer?.id || '')
+    }, [selectedTrainer])
+
+    React.useEffect(() => {
+        setSpecializationId(selectedSpecialization?.id || '')
+    }, [selectedSpecialization])
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const params = {
+                    level: level || undefined,
+                    trainerId: trainerId || undefined,
+                    specializationId: specializationId || undefined
+                }
+
+                const {classes} = await getAll(params)
+                setClasses(classes)
+            } catch (error) {
+                console.error('Ошибка загрузки:', error)
+            }
+        }
+
+        fetchData()
+    }, [level, trainerId, specializationId])
+
+    React.useEffect(() => {
+        getAllTrainer().then(({trainers}) => setTrainer(trainers))
+        getAllSpecialization().then(({specializations}) => setSpecialization(specializations))
+    }, [])
+
+    return (
+        <section className="classes">
+            <div className="classes__container">
+                <h2 className="classes__title">Доступные занятия</h2>
+
+                <div className="filters">
+                    <div className="filters__group">
+                        <select className="filters__select"
+                                value={level}
+                                onChange={(e) => setLevel(e.target.value)}>
+                            <option value="">Все уровни</option>
+                            {levels.map((lvl) => (
+                                <option key={lvl.value} value={lvl.value}>
+                                    {lvl.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="filters__group">
+                        <select className="filters__select"
+                                value={trainerId}
+                                onChange={(e) => setTrainerId(e.target.value)}>
+                            <option value="">Все тренеры</option>
+                            {trainer.map((t) => (
+                                <option key={t.id} value={t.id}>
+                                    {t.user.fullName}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="filters__group">
+                        <select className="filters__select"
+                                value={specializationId}
+                                onChange={(e) => setSpecializationId(e.target.value)}>
+                            <option value="">Все направления</option>
+                            {specialization.map((spec) => (
+                                <option key={spec.id} value={spec.id}>
+                                    {spec.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <button className="filters__button"
+                            onClick={() => {
+                                clearSelectedTrainer()
+                                clearSelectedSpecialization()
+                                setLevel('')
+                                setTrainerId('')
+                                setSpecializationId('')
+                            }}>
+                        Очистить фильтры
+                    </button>
+                </div>
+
+                {classes.length > 0 ? (
+                    <div className="classes__grid">
+                        {classes.map((cls, index) => (
+                            <div key={cls.id}
+                                 className="class-card"
+                                 style={{'--delay': index * 0.1 + 's'}}>
+                                <div className="class-card__hover-layer"></div>
+                                <div className="class-card__image-container">
+                                    <img src={import.meta.env.VITE_API_IMAGE_URL + "/" + cls.image}
+                                         alt={cls.name}
+                                         className="class-card__image"/>
+                                    <div className="class-card__level">
+                                        {cls.level}
+                                    </div>
+                                </div>
+
+                                <div className="class-card__content">
+                                    <h3 className="class-card__name">
+                                        {cls.name}
+                                        <span className="class-card__participants">
+                                            🧑🏽🤝🧑🏻 До {cls.maxParticipant} чел.
+                                        </span>
+                                    </h3>
+
+                                    <p className="class-card__description">
+                                        {cls.description}
+                                    </p>
+
+                                    <button className="class-card__button"
+                                            onClick={() => history(CURRENT_CLASS + '/' + cls.id)}>
+                                        Подробнее
+                                        <div className="button-arrow"></div>
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="subscriptions__empty">
+                        <div className="empty__icon">
+                            <div className="empty__pulse"></div>
+                            <svg className="empty__symbol" viewBox="0 0 24 24">
+                                <path
+                                    d="M11 15h2v2h-2zm0-8h2v6h-2zm1-5C6.47 2 2 6.5 2 12a10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2m0 18a8 8 0 01-8-8 8 8 0 018-8 8 8 0 018 8 8 8 0 01-8 8"/>
+                            </svg>
+                        </div>
+                        <h3 className="empty__title">Нет доступных занятий</h3>
+                        <p className="empty__text">Следите за обновлениями</p>
+                    </div>
+                )}
+            </div>
+        </section>
+    )
+}
+
+export default Classes

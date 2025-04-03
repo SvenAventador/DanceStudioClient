@@ -1,13 +1,26 @@
-import React from 'react';
-import {getAll} from "../http/specialization.js";
+import React from 'react'
+import {getAll} from "../http/specialization.js"
+import useSpecialization from "../store/Specialization.js"
+import {useNavigate} from "react-router-dom"
+import {CLASSES_PATH} from "../utils/utils.jsx";
 
 const Specialization = () => {
-    const [specialization, setSpecialization] = React.useState([]);
+    const [specialization, setSpecialization] = React.useState([])
+    const history = useNavigate()
+
+    const {setSelectedSpecialization} = useSpecialization()
+
     React.useEffect(() => {
         getAll().then(({specializations}) => {
             setSpecialization(specializations)
         })
     }, [])
+
+    const handleSelectSpecialization = (spec) => {
+        setSelectedSpecialization(spec)
+        history(CLASSES_PATH)
+    }
+
     return (
         <section className="specializations">
             <div className="specializations__container">
@@ -22,11 +35,9 @@ const Specialization = () => {
                                     <div className="specialization-card__hover-effect"></div>
 
                                     <div className="specialization-card__image-container">
-                                        <img
-                                            src={import.meta.env.VITE_API_IMAGE_URL + '/' + spec.image}
-                                            alt={spec.name}
-                                            className="specialization-card__image"
-                                        />
+                                        <img src={import.meta.env.VITE_API_IMAGE_URL + '/' + spec.image}
+                                             alt={spec.name}
+                                             className="specialization-card__image"/>
                                     </div>
 
                                     <div className="specialization-card__content">
@@ -34,11 +45,13 @@ const Specialization = () => {
                                             {spec.name}
                                         </h3>
 
-                                        <button className="specialization-card__button">
+                                        <button className="specialization-card__button"
+                                                onClick={() => handleSelectSpecialization(spec)}>
                                             Перейти к направлению
                                             <div className="button-arrow">
                                                 <svg className="subscription-card__arrow" viewBox="0 0 24 24">
-                                                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                                    <path
+                                                        d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
                                                 </svg>
                                             </div>
                                         </button>

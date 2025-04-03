@@ -29,20 +29,21 @@ $button-gradient: linear-gradient(135deg, $primary-blue 0%, $accent-blue 100%);
   font-weight: 800;
 
   .title-main {
+    text-align: center;
+    color: $primary-blue;
+    font-size: 3rem;
+    margin-bottom: 4rem;
     position: relative;
-    display: inline-block;
-    padding-bottom: 1rem;
 
     &::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: -1.5rem;
       left: 50%;
       transform: translateX(-50%);
       width: 120px;
       height: 3px;
-      background: $accent-blue;
-      border-radius: 2px;
+      background: linear-gradient(90deg, $accent-blue, transparent);
     }
   }
 

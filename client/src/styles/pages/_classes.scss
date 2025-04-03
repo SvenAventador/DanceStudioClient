@@ -1,0 +1,352 @@
+$primary-blue: #2A5D8A;
+$accent-blue: #3A7BAE;
+$light-bg: lighten($primary-blue, 55%);
+@mixin text-ellipsis($lines: 1) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.classes {
+  padding: 8rem 2rem;
+  background: $light-bg;
+
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    text-align: center;
+    color: $primary-blue;
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 3px;
+      background: linear-gradient(90deg, $accent-blue, transparent);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+.class-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba($primary-blue, 0.08);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  animation: cardEntrance 0.6s ease-out var(--delay) both;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba($primary-blue, 0.15);
+
+    .class-card__image {
+      transform: scale(1.05);
+    }
+
+    .class-card__hover-layer {
+      opacity: 1;
+    }
+  }
+
+  &__hover-layer {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: linear-gradient(
+                    120deg,
+                    rgba($accent-blue, 0) 40%,
+                    rgba($accent-blue, 0.1) 50%,
+                    rgba($accent-blue, 0) 60%
+    );
+    opacity: 0;
+    transition: opacity 0.6s;
+    pointer-events: none;
+  }
+
+  &__image-container {
+    height: 250px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  &__level {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba($primary-blue, 0.9);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+  }
+
+  &__content {
+    padding: 1.5rem 2rem;
+  }
+
+  &__name {
+    color: $primary-blue;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: $accent-blue;
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__participants {
+    display: block;
+    font-size: 0.9rem;
+    color: rgba($primary-blue, 0.8);
+    margin-top: 0.5rem;
+  }
+
+  &__description {
+    color: rgba($primary-blue, 0.9);
+    line-height: 1.6;
+    margin: 1.5rem 0;
+    @include text-ellipsis(3);
+    min-height: 4.8rem;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(135deg, $primary-blue, $accent-blue);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+
+    &:hover {
+      transform: scale(0.98);
+      box-shadow: 0 4px 15px rgba($accent-blue, 0.3);
+    }
+  }
+}
+
+.button-arrow {
+  width: 20px;
+  height: 20px;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background: white;
+    right: 0;
+    transition: transform 0.3s;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+    top: 6px;
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+    bottom: 6px;
+  }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.classes__empty {
+  &__icon {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 2rem;
+  }
+
+  &__pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 4px solid rgba($accent-blue, 0.3);
+    border-radius: 50%;
+    animation: pulsate 2s ease-in-out infinite;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid $accent-blue;
+      border-radius: 50%;
+      animation: pulsateInner 2s ease-in-out infinite;
+    }
+  }
+
+  &__symbol {
+    position: relative;
+    width: 60%;
+    height: 60%;
+    fill: $primary-blue;
+    animation: floating 3s ease-in-out infinite;
+    transform: translateY(0);
+  }
+
+  &__title {
+    color: $primary-blue;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    animation: textScale 1.5s ease-in-out infinite;
+  }
+
+  &__text {
+    color: rgba($primary-blue, 0.8);
+    font-size: 1.1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1200px) {
+  .classes__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .classes {
+    padding: 4rem 1rem;
+  }
+
+  .classes__grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .class-card__image-container {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .classes__title {
+    font-size: 2.2rem;
+  }
+
+  .class-card__content {
+    padding: 1.5rem;
+  }
+
+  .class-card__name {
+    font-size: 1.4rem;
+  }
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+
+  &__group {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  &__select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid $primary-blue;
+    border-radius: 30px;
+    background: white;
+    color: $primary-blue;
+    font-size: 1rem;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      border-color: $accent-blue;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($accent-blue, 0.3);
+    }
+  }
+
+  &__button {
+    background: linear-gradient(135deg, $primary-blue, $accent-blue);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-self: center;
+
+    &:hover {
+      transform: scale(0.98);
+      box-shadow: 0 4px 15px rgba($accent-blue, 0.3);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+
+    &__group {
+      width: 100%;
+    }
+
+    &__button {
+      width: 100%;
+    }
+  }
+}

@@ -16,6 +16,8 @@
 @use "pages/specialization" as specializationPage;
 @use "pages/subscription" as subscriptionPage;
 @use "pages/trainer" as trainerPage;
+@use "pages/classes";
+@use "pages/currentClass";
 
 /*components*/
 @use "components/global/loader";

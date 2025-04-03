@@ -45,21 +45,19 @@ $white: #FFFFFF;
   &__title {
     text-align: center;
     color: $primary-blue;
-    font-size: 2.8rem;
+    font-size: 3rem;
     margin-bottom: 4rem;
     position: relative;
-    @include text-ellipsis;
 
     &::after {
       content: '';
       position: absolute;
-      bottom: -1rem;
+      bottom: -1.5rem;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
+      width: 120px;
       height: 3px;
-      background: $accent-blue;
-      border-radius: 2px;
+      background: linear-gradient(90deg, $accent-blue, transparent);
     }
   }
 

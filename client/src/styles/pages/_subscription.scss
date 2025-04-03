@@ -40,21 +40,19 @@ $gradient-angle: 135deg;
   &__title {
     text-align: center;
     color: $primary-blue;
-    font-size: 3.2rem;
-    margin-bottom: 6rem;
+    font-size: 3rem;
+    margin-bottom: 4rem;
     position: relative;
-    font-weight: 800;
 
     &::after {
       content: '';
       position: absolute;
-      bottom: -2rem;
+      bottom: -1.5rem;
       left: 50%;
       transform: translateX(-50%);
       width: 120px;
-      height: 4px;
-      background: linear-gradient(90deg, $accent-blue 0%, rgba($accent-blue, 0.2) 100%);
-      border-radius: 2px;
+      height: 3px;
+      background: linear-gradient(90deg, $accent-blue, transparent);
     }
   }
 

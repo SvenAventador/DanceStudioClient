@@ -10,6 +10,7 @@ import Footer from "./user/global/Footer.jsx"
 import {
     ADMIN_PATH,
     CLASSES_PATH,
+    CURRENT_CLASS,
     LOGIN_PATH,
     MAIN_PATH,
     PERSONAL_PATH,
@@ -25,11 +26,12 @@ import Auth from "../pages/Auth.jsx"
 import Admin from "../pages/admin/Admin.jsx"
 import Subscription from "../pages/Subscription.jsx"
 import Trainer from "../pages/Trainer.jsx"
-import TrainerPerson from "../pages/trainer/Trainer.jsx";
+import TrainerPerson from "../pages/trainer/Trainer.jsx"
 import Specialization from "../pages/Specialization.jsx"
 import Personal from "../pages/user/Personal.jsx"
 import NotFound from "../pages/NotFound.jsx"
 import Classes from "../pages/Classes.jsx"
+import CurrentClass from "../pages/CurrentClass.jsx"
 
 const Layout = ({children}) => {
     return (
@@ -108,6 +110,12 @@ const SiteNavigation = () => {
                        element={
                            <Layout>
                                <Personal/>
+                           </Layout>
+                       }/>
+                <Route path={CURRENT_CLASS + '/:id'}
+                       element={
+                           <Layout>
+                               <CurrentClass/>
                            </Layout>
                        }/>
 

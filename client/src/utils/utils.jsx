@@ -1,6 +1,6 @@
-import {Divider} from "primereact/divider";
-import React from "react";
-import {Image} from "primereact/image";
+import {Divider} from "primereact/divider"
+import React from "react"
+import {Image} from "primereact/image"
 
 export const MAIN_PATH = '/'
 export const LOGIN_PATH = '/login'
@@ -12,6 +12,7 @@ export const TRAINER_PERSONAL_PATH = '/trainer_personal'
 export const SPECIALIZATION_PATH = '/specialization'
 export const CLASSES_PATH = '/classes'
 export const PERSONAL_PATH = '/personal'
+export const CURRENT_CLASS = "/current_class"
 
 export const showToast = (toast, severity, summary, detail, life) => {
     toast.current.show({
