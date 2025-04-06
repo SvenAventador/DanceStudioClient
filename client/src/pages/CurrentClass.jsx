@@ -11,7 +11,6 @@ const CurrentClass = () => {
     const {user} = useUser()
 
     const toast = React.useRef(null)
-
     const [currentClass, setCurrentClass] = React.useState(null)
 
     const levelTranslations = {
@@ -30,13 +29,6 @@ const CurrentClass = () => {
         const options = {year: 'numeric', month: 'long', day: 'numeric'}
         return new Date(dateString).toLocaleDateString('ru-RU', options)
     }
-
-    if (!currentClass)
-        return (
-            <div className="current-class-loading">
-                <div className="loading-spinner"></div>
-            </div>
-        )
 
     const handleSignUpForClasses = (scheduleId) => {
         try {
@@ -59,6 +51,19 @@ const CurrentClass = () => {
             return showToast(toast, 'error', 'Ошибка записи', `${error.message}`, 5000)
         }
     }
+
+    if (!currentClass)
+        return (
+            <div className="current-class-loading">
+                <div className="loading-spinner"></div>
+            </div>
+        )
+
+    const currentDate = new Date()
+    const upcomingSchedules = currentClass.schedules.filter(schedule => {
+        const scheduleDateTime = new Date(`${schedule.date}T${schedule.time}`)
+        return scheduleDateTime > currentDate && schedule.availableSlots > 0
+    })
 
     return (
         <div className="current-class">
@@ -101,36 +106,38 @@ const CurrentClass = () => {
 
                 <h2 className="schedule-title">Расписание занятий</h2>
                 <div className="schedule-grid">
-                    {currentClass.schedules.map((schedule, index) => (
-                        <div className="schedule-card"
-                             key={schedule.id}
-                             style={{animationDelay: `${index * 0.1}s`}}>
-                            <div className="schedule-card__content">
-                                <h3 className="schedule-date">
-                                    {formatDate(schedule.date)}
-                                </h3>
-                                <div className="schedule-time">
-                                    <span className="time-icon">🕒</span>
-                                    {schedule.time.slice(0, 5)}
-                                </div>
-                                <div className="schedule-info">
-                                    <div className="info-item">
-                                        <span className="info-icon">⏳</span>
-                                        {schedule.duration} минут
+                    {upcomingSchedules.length > 0 && (
+                        upcomingSchedules.map((schedule, index) => (
+                            <div className="schedule-card"
+                                 key={schedule.id}
+                                 style={{animationDelay: `${index * 0.1}s`}}>
+                                <div className="schedule-card__content">
+                                    <h3 className="schedule-date">
+                                        {formatDate(schedule.date)}
+                                    </h3>
+                                    <div className="schedule-time">
+                                        <span className="time-icon">🕒</span>
+                                        {schedule.time.slice(0, 5)}
                                     </div>
-                                    <div className="info-item">
-                                        <span className="info-icon">🎫</span>
-                                        Свободных мест: {schedule.availableSlots}
+                                    <div className="schedule-info">
+                                        <div className="info-item">
+                                            <span className="info-icon">⏳</span>
+                                            {schedule.duration} минут
+                                        </div>
+                                        <div className="info-item">
+                                            <span className="info-icon">🎫</span>
+                                            Свободных мест: {schedule.availableSlots}
+                                        </div>
                                     </div>
+                                    <button className="schedule-button"
+                                            onClick={() => handleSignUpForClasses(schedule.id)}>
+                                        Записаться
+                                        <span className="button-arrow"></span>
+                                    </button>
                                 </div>
-                                <button className="schedule-button"
-                                        onClick={() => handleSignUpForClasses(schedule.id)}>
-                                    Записаться
-                                    <span className="button-arrow"></span>
-                                </button>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
             </div>
         </div>

@@ -5,7 +5,6 @@ import {
 } from 'primereact/tabview'
 import Personal from "../../components/trainer/Personal.jsx"
 import Classes from "../../components/trainer/Classes.jsx"
-import Clients from "../../components/trainer/Clients.jsx"
 import {useUser} from "../../store/User.js";
 import {MAIN_PATH, showToast} from "../../utils/utils.jsx";
 import {Toast} from "primereact/toast";
@@ -53,9 +52,6 @@ const Trainer = () => {
                 </TabPanel>
                 <TabPanel header={headerTemplate('pi-calendar', 'Занятия')}>
                     <Classes/>
-                </TabPanel>
-                <TabPanel header={headerTemplate('pi-users', 'Пользователи')}>
-                    <Clients/>
                 </TabPanel>
                 <TabPanel header={
                     <div className="flex align-items-center gap-2"

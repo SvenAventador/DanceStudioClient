@@ -208,7 +208,7 @@ const UserCabinet = () => {
                                 ></div>
                             ))}
                         </div>
-                        <h3 className="subscription-title">{subscription.name}</h3>
+                        <h3 className="subscription-title">{subscription.subscription?.name}</h3>
                         <div className="subscription-details">
                             <div className="detail-item">
                                 <span className="detail-icon">⭐</span>
@@ -216,11 +216,11 @@ const UserCabinet = () => {
                             </div>
                             <div className="detail-item">
                                 <span className="detail-icon">💰</span>
-                                Стоимость: {subscription.price} ₽
+                                Стоимость: {subscription.subscription?.price} ₽
                             </div>
                         </div>
                         <div className="subscription-description">
-                            {subscription.description}
+                            {subscription.subscription?.description}
                         </div>
                     </div>
                 </div>

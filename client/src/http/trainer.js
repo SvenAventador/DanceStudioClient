@@ -12,6 +12,11 @@ export const getAll = async () => {
     return data
 }
 
+export const getOneWithData = async (id) => {
+    const {data} = await $authHost.get(`trainer/allData/${id}`)
+    return data
+}
+
 export const create = async (trainer) => {
     const {data} = await $authHost.post('trainer', trainer)
     return data

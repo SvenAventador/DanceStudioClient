@@ -1,33 +1,39 @@
 import React, {useState} from 'react'
 import Login from "../components/auth/Login.jsx"
 import Registration from "../components/auth/Registration.jsx"
-import {NavLink} from "react-router-dom"
+import {NavLink, useNavigate} from "react-router-dom"
 import {
     LOGIN_PATH,
+    MAIN_PATH,
     REGISTRATION_PATH
 } from "../utils/utils.jsx"
 
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
+    const history = useNavigate()
 
     return (
         <div className="auth">
             <div className="auth__form-container">
                 <div className="auth__header">
-                    <h2 className="auth__title">
+                    <h2 className="auth__title"
+                        style={{
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => history(MAIN_PATH)}>
                         BD Dance Studio
                     </h2>
                 </div>
                 <p className="auth__welcome">
                     {
                         isLogin ? "С возвращением 👋"
-                                : "Дорбро пожаловать 👋"
+                            : "Добро пожаловать 👋"
                     }
                 </p>
                 <p className="auth__sub-title">
                     {
                         isLogin ? "Пожалуйста, войдите в аккаунт, чтобы пользоваться всем нашим функционалом"
-                                : "Пожалуйста, зарегистрируйтесь, чтобы начать пользоваться всем нашим функционалом"
+                            : "Пожалуйста, зарегистрируйтесь, чтобы начать пользоваться всем нашим функционалом"
                     }
                 </p>
                 {isLogin ? <Login/> : <Registration/>}

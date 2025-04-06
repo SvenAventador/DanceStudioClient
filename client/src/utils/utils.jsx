@@ -13,6 +13,7 @@ export const SPECIALIZATION_PATH = '/specialization'
 export const CLASSES_PATH = '/classes'
 export const PERSONAL_PATH = '/personal'
 export const CURRENT_CLASS = "/current_class"
+export const CURRENT_TRAINER = '/current_trainer'
 
 export const showToast = (toast, severity, summary, detail, life) => {
     toast.current.show({

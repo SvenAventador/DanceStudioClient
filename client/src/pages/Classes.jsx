@@ -128,7 +128,9 @@ const Classes = () => {
                                          alt={cls.name}
                                          className="class-card__image"/>
                                     <div className="class-card__level">
-                                        {cls.level}
+                                        {
+                                            levels.find(l => l.value === cls.level)?.label || cls.level
+                                        }
                                     </div>
                                 </div>
 

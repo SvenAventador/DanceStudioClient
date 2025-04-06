@@ -24,7 +24,7 @@ import {InputMask} from "primereact/inputmask";
 const Personal = () => {
     const [isEditing, setIsEditing] = React.useState(false)
     const [avatarUrl, setAvatarUrl] = React.useState('/demo/images/avatar/amyelsner.png')
-    const {user} = useUser()
+    const {user, updateUserLocal} = useUser()
     const fileInputRef = React.useRef(null)
     const toast = React.useRef(null)
     const [currentTrainer, setCurrentTrainer] = React.useState(null)
@@ -124,6 +124,7 @@ const Personal = () => {
 
             editPersonalData(trainer).then(() => {
                 showToast(toast, 'success', 'Внимание', `Данные успешно изменены!`, 5000)
+                updateUserLocal(userData.email, userData.fullName, userData.phone)
                 setIsEditing(!isEditing)
             }).catch((error) => {
                 return showToast(toast, 'error', 'Ошибка', `${error.response.data.message}`, 5000)
@@ -209,7 +210,7 @@ const Personal = () => {
                                     fontSize: '2rem',
                                     textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
                                 }}>
-                                {`Профиль тренера ${getGenitiveName(userData?.fullName)}`}
+                                {`Профиль тренера ${getGenitiveName(user?.fullName)}`}
                             </h1>
 
                             <div className="p-fluid">

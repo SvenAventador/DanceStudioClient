@@ -1,6 +1,6 @@
 import React from 'react'
 import {getAll} from "../http/trainer.js"
-import {CLASSES_PATH} from "../utils/utils.jsx"
+import {CLASSES_PATH, CURRENT_TRAINER} from "../utils/utils.jsx"
 import {useNavigate} from "react-router-dom"
 import useTrainer from "../store/Trainer.js";
 
@@ -36,7 +36,8 @@ const Trainer = () => {
                             {trainers.map((trainer, index) => (
                                 <div key={trainer.id}
                                      className="trainer-card"
-                                     style={{'--delay': index * 0.15 + 's'}}>
+                                     style={{'--delay': index * 0.15 + 's'}}
+                                     onClick={() => history(CURRENT_TRAINER + '/' + trainer.id)}>
                                     <div className="card-wave-effect"></div>
                                     <div className="card-content">
                                         <div className="image-wrapper">
@@ -59,7 +60,7 @@ const Trainer = () => {
                                             </p>
 
                                             <button className="action-button"
-                                            onClick={() => handleSelectTrainer(trainer)}>
+                                                    onClick={() => handleSelectTrainer(trainer)}>
                                                 Посмотреть занятия
                                                 <svg className="subscription-card__arrow" viewBox="0 0 24 24">
                                                     <path

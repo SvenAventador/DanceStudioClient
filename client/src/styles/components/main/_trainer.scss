@@ -11,9 +11,9 @@ $white: #FFFFFF;
 }
 
 .trainers {
-  background: lighten($primary-blue, 50%);
+  background: lighten($primary-blue, 55%);
   padding: 4rem 2rem;
-  margin-top: 2rem;
+
   &__container {
     max-width: 1200px;
     margin: 0 auto;
@@ -181,7 +181,6 @@ $white: #FFFFFF;
 
 @media (max-width: 768px) {
   .trainers {
-    margin-top: 5.5rem;
     padding: 4rem 1rem;
 
     &__title {
@@ -191,6 +190,10 @@ $white: #FFFFFF;
     &__grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  .animated-title {
+    margin-top: 4rem;
   }
 
   .trainer-card {
@@ -215,7 +218,6 @@ $white: #FFFFFF;
 @media (max-width: 480px) {
   .trainers {
     padding: 2rem 1rem;
-    margin-top: 5.5rem;
 
     &__title {
       font-size: 1.8rem;

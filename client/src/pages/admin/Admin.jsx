@@ -1,13 +1,13 @@
-import React from 'react';
-import {Menu} from 'primereact/menu';
-import {useNavigate} from 'react-router-dom';
-import {PrimeIcons} from 'primereact/api';
-import {useUser} from "../../store/User.js";
-import {Toast} from "primereact/toast";
-import {MAIN_PATH, showToast} from "../../utils/utils.jsx";
-import Trainer from "../../components/admin/Trainer.jsx";
-import Subscription from "../../components/admin/Subscription.jsx";
-import Specialization from "../../components/admin/Specialization.jsx";
+import React from 'react'
+import {Menu} from 'primereact/menu'
+import {useNavigate} from 'react-router-dom'
+import {PrimeIcons} from 'primereact/api'
+import {useUser} from "../../store/User.js"
+import {Toast} from "primereact/toast"
+import {MAIN_PATH, showToast} from "../../utils/utils.jsx"
+import Trainer from "../../components/admin/Trainer.jsx"
+import Subscription from "../../components/admin/Subscription.jsx"
+import Specialization from "../../components/admin/Specialization.jsx"
 
 const Admin = () => {
     const toast = React.useRef(null)
@@ -19,7 +19,7 @@ const Admin = () => {
 
     const items = [
         {
-            label: 'Специализация тренера',
+            label: 'Направления тренеров',
             icon: PrimeIcons.STAR,
             command: () => setSelectedMenuItem('specialization')
         },

@@ -36,7 +36,7 @@ const Header = () => {
 
     const getButtonText = () => {
         if (!user)
-            return "Авторизоваться"
+            return "Войти"
         if (isOnPersonalPage)
             return "Выход"
         return "Личный кабинет"

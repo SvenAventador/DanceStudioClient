@@ -1,7 +1,7 @@
 import React from 'react'
 import {getAll} from "../../../http/subscription.js"
-import {Link} from "react-router-dom";
-import {SUBSCRIPTION_PATH} from "../../../utils/utils.jsx";
+import {Link} from "react-router-dom"
+import {SUBSCRIPTION_PATH} from "../../../utils/utils.jsx"
 
 const Subscriptions = () => {
     const [subscriptions, setSubscriptions] = React.useState([])
@@ -46,12 +46,6 @@ const Subscriptions = () => {
                                         <span className="subscription-card__label">занятий</span>
                                     </div>
                                 </div>
-                                <button className="subscription-card__button">
-                                    Выбрать абонемент
-                                    <svg className="subscription-card__arrow" viewBox="0 0 24 24">
-                                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-                                    </svg>
-                                </button>
                             </div>
                         </article>
                     ))}

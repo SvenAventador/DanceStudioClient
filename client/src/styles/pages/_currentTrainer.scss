@@ -1,0 +1,273 @@
+$primary-blue: #2A5D8A;
+$accent-blue: #3A7BAE;
+$light-bg: lighten($primary-blue, 55%);
+$button-gradient: linear-gradient(135deg, $primary-blue 0%, $accent-blue 100%);
+
+.current-trainer-container {
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  animation: fadeIn 0.6s ease-out;
+
+  .section-title {
+    color: $primary-blue;
+    font-size: 2.2rem;
+    margin: 3rem 0 2rem;
+    position: relative;
+    padding-bottom: 1rem;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: $accent-blue;
+    }
+  }
+}
+
+.trainer-profile {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba($primary-blue, 0.08);
+  overflow: hidden;
+  margin-bottom: 3rem;
+
+  .profile-header {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .image-wrapper {
+    position: relative;
+    height: 500px;
+
+    @media (max-width: 768px) {
+      height: 350px;
+    }
+
+    .trainer-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .specialization-tag {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      background: rgba(white, 0.9);
+      padding: 0.8rem 2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      color: $primary-blue;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 4px 15px rgba($primary-blue, 0.1);
+    }
+  }
+
+  .profile-info {
+    padding: 2rem 2rem 2rem 0;
+
+    @media (max-width: 768px) {
+      padding: 2rem;
+    }
+
+    .trainer-name {
+      color: $primary-blue;
+      font-size: 2.4rem;
+      margin-bottom: 1.5rem;
+
+      .experience {
+        display: block;
+        font-size: 1.1rem;
+        color: rgba($primary-blue, 0.8);
+        margin-top: 0.5rem;
+      }
+    }
+
+    .bio {
+      color: rgba($primary-blue, 0.9);
+      line-height: 1.6;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .p-button {
+        justify-content: flex-start;
+        padding-left: 0;
+
+        .pi {
+          color: $accent-blue;
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.classes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+
+  .class-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba($primary-blue, 0.05);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .class-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .class-info {
+      padding: 1.5rem;
+
+      h3 {
+        color: $primary-blue;
+        margin-bottom: 1rem;
+      }
+
+      .class-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: rgba($primary-blue, 0.8);
+      }
+    }
+  }
+}
+
+.comment-form {
+  background: rgba($light-bg, 0.5);
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 3rem;
+  box-shadow: 0 5px 20px rgba($primary-blue, 0.05);
+
+  textarea {
+    width: 100%;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    border: 2px solid rgba($accent-blue, 0.2);
+    border-radius: 10px;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: $accent-blue;
+    }
+  }
+
+  .p-button {
+    background: $button-gradient;
+    border: none;
+    padding: 1rem 2.5rem;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.comments-list {
+  .comment-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba($primary-blue, 0.05);
+    animation: slideUp 0.5s ease-out;
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      h4 {
+        color: $primary-blue;
+        margin: 0;
+      }
+
+      .comment-meta {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+
+        .p-rating {
+          .p-rating-icon {
+            color: #ffd700;
+          }
+        }
+
+        span {
+          color: rgba($primary-blue, 0.6);
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    .comment-text {
+      color: rgba($primary-blue, 0.9);
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1200px) {
+  .trainer-profile .profile-header {
+    grid-template-columns: 1fr;
+  }
+
+  .classes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .classes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
+  }
+}
