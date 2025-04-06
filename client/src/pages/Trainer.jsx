@@ -22,7 +22,10 @@ const Trainer = () => {
     }
 
     return (
-        <section className="trainers">
+        <section className="trainers"
+                 style={{
+                     marginTop: '2rem'
+                 }}>
             <div className="dynamic-grid"></div>
 
             <div className="trainers__container">

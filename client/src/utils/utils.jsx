@@ -1,6 +1,7 @@
 import {Divider} from "primereact/divider"
 import React from "react"
 import {Image} from "primereact/image"
+import {useLocation} from "react-router-dom"
 
 export const MAIN_PATH = '/'
 export const LOGIN_PATH = '/login'
@@ -37,6 +38,16 @@ export const footer = (
         </ul>
     </>
 )
+
+export default function ScrollToTop() {
+    const { pathname } = useLocation()
+
+    React.useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname])
+
+    return null
+}
 
 export const itemTemplate = (file, _) => {
     return (

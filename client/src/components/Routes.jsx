@@ -7,7 +7,7 @@ import {
 
 import Header from "./user/global/Header.jsx"
 import Footer from "./user/global/Footer.jsx"
-import {
+import ScrollToTop, {
     ADMIN_PATH,
     CLASSES_PATH,
     CURRENT_CLASS, CURRENT_TRAINER,
@@ -51,6 +51,7 @@ const Layout = ({children}) => {
 const SiteNavigation = () => {
     return (
         <BrowserRouter>
+            <ScrollToTop/>
             <Routes>
                 <Route path={MAIN_PATH}
                        element={
