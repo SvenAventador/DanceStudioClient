@@ -1,6 +1,9 @@
-import React from 'react';
+import React from 'react'
+import {useNavigate} from "react-router-dom"
+import {CLASSES_PATH} from "../../../utils/utils.jsx";
 
 const Hero = () => {
+    const history = useNavigate()
     return (
         <section className="hero">
             <div className="hero__parallax-wrapper">
@@ -13,8 +16,11 @@ const Hero = () => {
                         Профессиональные тренеры и современные залы
                         <span className="hero__text-underline"></span>
                     </p>
-                    <button className="hero__cta-button">
-                        <span className="cta-button__text">Перейти к доступным занятиям</span>
+                    <button className="hero__cta-button"
+                            onClick={() => history(CLASSES_PATH)}>
+                        <span className="cta-button__text">
+                            Перейти к доступным занятиям
+                        </span>
                         <div className="cta-button__hover-effect"></div>
                     </button>
                 </div>

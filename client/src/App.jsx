@@ -1,7 +1,7 @@
-import React from 'react';
-import {useUser} from "./store/User.js";
+import React from 'react'
+import {useUser} from "./store/User.js"
 import logo from './assets/logo.png'
-import SiteNavigation from "./components/Routes.jsx";
+import SiteNavigation from "./components/Routes.jsx"
 
 const App = () => {
     const [isLoading, setIsLoading] = React.useState(true)

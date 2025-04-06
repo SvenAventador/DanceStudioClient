@@ -274,6 +274,7 @@ $light-bg: lighten($primary-blue, 55%);
 
 @media (max-width: 480px) {
   .classes__title {
+    margin-top: 5.5rem;
     font-size: 2.2rem;
   }
 

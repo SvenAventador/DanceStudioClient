@@ -1,0 +1,514 @@
+$primary-blue: #2A5D8A;
+$accent-blue: #3A7BAE;
+$light-bg: lighten($primary-blue, 55%);
+$premium-gold: #FFD700;
+
+@mixin text-ellipsis($lines: 1) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-cabinet {
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+
+  .cabinet-header {
+    margin-bottom: 4rem;
+    text-align: center;
+
+    .welcome-title {
+      color: $primary-blue;
+      font-size: 2.5rem;
+      animation: fadeInUp 0.8s ease-out;
+
+      @media (max-width: 768px) {
+        margin-top: 5.5rem;
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .cabinet-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 5rem;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.personal-info {
+  .info-card {
+    background: white;
+    border-radius: 25px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba($primary-blue, 0.08);
+    animation: cardEntrance 0.6s ease-out;
+
+    .section-title {
+      color: $primary-blue;
+      font-size: 1.8rem;
+      margin-bottom: 2rem;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -0.8rem;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: $accent-blue;
+      }
+    }
+
+    .info-content {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.1rem;
+      color: rgba($primary-blue, 0.9);
+      padding: 1rem;
+      background: $light-bg;
+      border-radius: 15px;
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: translateX(10px);
+      }
+
+      .info-icon {
+        font-size: 1.4em;
+      }
+    }
+
+    .edit-form {
+      display: grid;
+      gap: 1.5rem;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+          color: $primary-blue;
+          font-weight: 500;
+        }
+
+        input {
+          padding: 0.8rem 1.2rem;
+          border: 2px solid rgba($primary-blue, 0.2);
+          border-radius: 12px;
+          font-size: 1rem;
+          transition: all 0.3s;
+
+          &:focus {
+            border-color: $accent-blue;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba($accent-blue, 0.1);
+          }
+        }
+      }
+    }
+
+    .edit-button {
+      margin-top: 2rem;
+      background: linear-gradient(135deg, $primary-blue, $accent-blue);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+                        45deg,
+                        transparent 30%,
+                        rgba(white, 0.3) 50%,
+                        transparent 70%
+        );
+        animation: buttonShine 3s infinite;
+      }
+
+      &:hover {
+        transform: scale(0.98);
+        box-shadow: 0 4px 15px rgba($accent-blue, 0.3);
+      }
+    }
+  }
+}
+
+.subscription-section {
+  .subscription-card {
+    background: linear-gradient(135deg, $primary-blue, $accent-blue);
+    color: white;
+    padding: 2.5rem;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    animation: subscriptionEntrance 0.8s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba($primary-blue, 0.25);
+
+      .card-glow {
+        animation: glowPulse 2s infinite;
+      }
+    }
+
+    .card-glow {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(rgba(white, 0.15), transparent 70%);
+      top: -50px;
+      right: -50px;
+      pointer-events: none;
+      animation: glowMove 8s infinite linear;
+    }
+
+    .card-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(white, 0.4);
+      border-radius: 50%;
+      top: calc(var(--y) * 100%);
+      left: calc(var(--x) * 100%);
+      animation: particleFloat 4s var(--delay) infinite;
+    }
+
+    .subscription-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .subscription-details {
+      display: grid;
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+      z-index: 2;
+      position: relative;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.1rem;
+
+      .detail-icon {
+        font-size: 1.4em;
+      }
+    }
+
+    .subscription-description {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+
+.bookings-section {
+  .bookings-title {
+    color: $primary-blue;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeIn 0.8s;
+  }
+
+  .bookings-grid {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 2rem;
+  }
+
+  .booking-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba($primary-blue, 0.08);
+    animation: cardEntrance 0.6s ease-out both;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba($primary-blue, 0.15);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+
+      .class-name {
+        color: $primary-blue;
+        font-size: 1.2rem;
+        margin: 0;
+        @include text-ellipsis(2);
+      }
+
+      .class-level {
+        background: rgba($accent-blue, 0.1);
+        color: $accent-blue;
+        padding: 0.3rem 1rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+      }
+    }
+
+    .card-details {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+
+      .detail {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        color: rgba($primary-blue, 0.9);
+        font-size: 0.95rem;
+
+        .detail-icon {
+          font-size: 1.2em;
+        }
+      }
+    }
+
+    .cancel-button {
+      background: rgba(#ff4444, 0.1);
+      color: #ff4444;
+      border: 1px solid rgba(#ff4444, 0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 20px;
+      width: 100%;
+      transition: all 0.3s;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(#ff4444, 0.2);
+      }
+    }
+  }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes subscriptionEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-5deg);
+    box-shadow: 0 0 0 rgba($primary-blue, 0);
+  }
+  80% {
+    transform: scale(1.02) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+    box-shadow: 0 20px 40px rgba($primary-blue, 0.15);
+  }
+}
+
+@keyframes glowMove {
+  0% {
+    transform: translate(-50%, -50%);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(50%, 50%);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%);
+    opacity: 0.4;
+  }
+}
+
+@keyframes glowPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+
+@keyframes buttonShine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .user-cabinet {
+    padding: 2rem 1rem;
+  }
+
+  .subscription-card {
+    padding: 1.5rem !important;
+  }
+
+  .info-card {
+    padding: 1.5rem !important;
+  }
+}
+
+.empty-state-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  width: 100%;
+  padding: 2rem;
+  animation: fadeIn 0.5s ease-in;
+
+  .subscriptions__empty {
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+
+    .empty__icon {
+      position: relative;
+      margin: 0 auto 2rem;
+      width: 100px;
+      height: 100px;
+
+      .empty__pulse {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba($primary-blue, 0.1);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      .empty__symbol {
+        width: 50px;
+        height: 50px;
+        fill: $primary-blue;
+        position: relative;
+        z-index: 2;
+      }
+    }
+
+    .empty__title {
+      color: $primary-blue;
+      margin-bottom: 1rem;
+    }
+
+    .empty__text {
+      color: rgba($primary-blue, 0.8);
+      line-height: 1.5;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}

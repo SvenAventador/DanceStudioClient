@@ -4,11 +4,11 @@ $light-bg: lighten($primary-blue, 55%);
 $button-gradient: linear-gradient(135deg, $primary-blue 0%, $accent-blue 100%);
 
 .trainers {
-  margin-top: 5rem;
   padding: 5rem 4rem;
   background: $light-bg;
   position: relative;
   overflow: hidden;
+  margin-top: 2rem;
 
   .dynamic-grid {
     position: absolute;
@@ -26,7 +26,6 @@ $button-gradient: linear-gradient(135deg, $primary-blue 0%, $accent-blue 100%);
   color: $primary-blue;
   margin-bottom: 4rem;
   position: relative;
-  font-weight: 800;
 
   .title-main {
     text-align: center;

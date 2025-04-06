@@ -100,5 +100,16 @@ export const useUser = create((set) => ({
                 message: error.response.data.message
             })
         }
+    },
+
+    updateUserLocal: (email, fullName, phone) => {
+        set(state => ({
+            user: {
+                ...state.user,
+                email: email,
+                fullName: fullName,
+                phone: phone
+            }
+        }))
     }
 }))

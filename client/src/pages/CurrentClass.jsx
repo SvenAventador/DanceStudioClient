@@ -2,12 +2,15 @@ import React from 'react'
 import {useParams} from "react-router-dom"
 import {getOne} from "../http/classes.js"
 import {useUser} from "../store/User.js"
-import {signUp} from "../http/schedule.js";
-import Swal from "sweetalert2";
+import {signUp} from "../http/schedule.js"
+import {showToast} from "../utils/utils.jsx"
+import {Toast} from "primereact/toast"
 
 const CurrentClass = () => {
     const {id} = useParams()
     const {user} = useUser()
+
+    const toast = React.useRef(null)
 
     const [currentClass, setCurrentClass] = React.useState(null)
 
@@ -23,8 +26,6 @@ const CurrentClass = () => {
         })
     }, [id])
 
-    console.log(id)
-
     const formatDate = (dateString) => {
         const options = {year: 'numeric', month: 'long', day: 'numeric'}
         return new Date(dateString).toLocaleDateString('ru-RU', options)
@@ -37,46 +38,31 @@ const CurrentClass = () => {
             </div>
         )
 
-    const handleSignUpForClasses = () => {
+    const handleSignUpForClasses = (scheduleId) => {
         try {
             if (!user)
-                return Swal.fire({
-                    title: 'Ошибка',
-                    text: 'Перед записью на данное мероприятие необходимо авторизоваться!'
-                })
+                return showToast(toast, 'error', 'Ошибка записи', 'Перед тем, как записаться на данное мероприятие, необходимо авторизоваться!', 5000)
 
             const signUpData = new FormData()
             signUpData.append('userId', user?.id)
-            signUpData.append('classId', +id)
-
-            for (let pair of signUpData.entries())
-                console.log(pair[0], ' ', pair[1])
+            signUpData.append('scheduleId', parseInt(scheduleId))
 
             signUp(signUpData).then(() => {
-                Swal.fire({
-                    title: 'Поздравляем!',
-                    text: 'Вы успешно записались на данное занятие!'
-                }).then(() => {
-                    getOne(id).then(({currentClass}) => {
-                        setCurrentClass(currentClass)
-                    })
+                showToast(toast, 'success', 'Успешно', 'Поздравляем с успешной записью на данное занятие ', 5000)
+                getOne(id).then(({currentClass}) => {
+                    setCurrentClass(currentClass)
                 })
             }).catch((error) => {
-                return Swal.fire({
-                    title: 'Ошибка',
-                    text: error.response.data.message
-                })
+                return showToast(toast, 'error', 'Ошибка записи', `${error.response.data.message}`, 5000)
             })
         } catch (error) {
-            return Swal.fire({
-                title: 'Ошибка',
-                text: error.message
-            })
+            return showToast(toast, 'error', 'Ошибка записи', `${error.message}`, 5000)
         }
     }
 
     return (
         <div className="current-class">
+            <Toast ref={toast}/>
             <div className="current-class__hero">
                 <div className="hero-image-container">
                     <img src={`${import.meta.env.VITE_API_IMAGE_URL}/${currentClass.image}`}
@@ -138,7 +124,7 @@ const CurrentClass = () => {
                                     </div>
                                 </div>
                                 <button className="schedule-button"
-                                        onClick={handleSignUpForClasses}>
+                                        onClick={() => handleSignUpForClasses(schedule.id)}>
                                     Записаться
                                     <span className="button-arrow"></span>
                                 </button>

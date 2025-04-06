@@ -9,8 +9,8 @@ const Trainers = () => {
     React.useEffect(() => {
         getAll().then(({ trainers }) => {
             setTrainers(trainers.slice(0, 6));
-        });
-    }, []);
+        })
+    }, [])
 
     return (
         <section className="trainers">

@@ -333,7 +333,8 @@ $white: #FFFFFF;
     padding: 4rem 1rem;
 
     &__title {
-      font-size: 2.2rem;
+      margin-top: 1.5rem;
+      font-size: 3rem;
       margin-bottom: 3rem;
 
       &::after {
@@ -386,6 +387,7 @@ $white: #FFFFFF;
 
 @media (max-width: 480px) {
   .subscriptions {
+    margin-top: 4.5rem;
     padding: 2rem 1rem;
 
     &__title {

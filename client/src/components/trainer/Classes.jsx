@@ -31,7 +31,7 @@ import {
 import {InputTextarea} from "primereact/inputtextarea"
 import {InputNumber} from "primereact/inputnumber"
 import {Dropdown} from "primereact/dropdown"
-import {Calendar} from "primereact/calendar";
+import {Calendar} from "primereact/calendar"
 
 const Classes = () => {
     const {user} = useUser()
@@ -43,7 +43,7 @@ const Classes = () => {
             setCurrentTrainer(currentTrainer)
         })
 
-        getAll(null, null, null).then(({classes}) => {
+        getAll().then(({classes}) => {
             setClasses(classes)
         })
     }, [])
@@ -146,7 +146,7 @@ const Classes = () => {
 
                 edit(editClass).then(() => {
                     showToast(toast, "success", "Поздравляем", "Запись успешно изменена!", 3000)
-                    getAll(null, null, null).then(({classes}) => {
+                    getAll().then(({classes}) => {
                         setClasses(classes)
                     })
                     closeModal()
@@ -165,7 +165,7 @@ const Classes = () => {
 
                 create(addClass).then(() => {
                     showToast(toast, "success", "Поздравляем", "Запись успешно изменена!", 3000)
-                    getAll(null, null, null).then(({classes}) => {
+                    getAll().then(({classes}) => {
                         setClasses(classes)
                     })
                     closeModal()
@@ -191,7 +191,7 @@ const Classes = () => {
                 try {
                     deleteOne(id).then(() => {
                         showToast(toast, "success", "warn", "Запись успешно удалена", 3000);
-                        getAll(null, null, null).then(({classes}) => {
+                        getAll().then(({classes}) => {
                             setClasses(classes)
                         })
                     })
